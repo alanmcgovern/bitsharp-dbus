@@ -1,0 +1,37 @@
+Here's just my thoughts on how to structure the DBus stuff.
+
+Interface Declarations:
+
+IDownloader 		- org.monotorrent.downloader
+IEngine				- org.monotorrent.engine
+IEngineSettings		- org.monotorrent.enginesettings
+ITorrent			- org.monotorrent.torrent
+ITorrentFile		- org.monotorrent.torrentfile
+ITorrentSettings	- org.monotorrent.torrentsettings
+ITracker			- org.monotorrent.tracker
+
+
+You can have multiple engines:
+/org/monotorrent/{appname}/engine
+
+
+Each engine can have multiple torrents
+/org/monotorrent/{appname}/torrents/{1}
+
+
+2)  Properties, events and methods for a  engine reside here
+
+/org/monotorrent/{appname}/engine/*
+
+
+
+3) Each Engine can have multiple torrents downloading. Each one is assigned a ID
+
+/org/monotorrent/{appname}/engine/downloaders/$id$
+
+
+
+4) Properties, events and methods for downloaders will reside here:
+
+/org/monotorrent/{appname}/engine/downloaders/$id$/*
+
