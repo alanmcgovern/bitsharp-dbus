@@ -1,0 +1,4 @@
+2008-06-11  Alan McGovern <alan.mcgovern@gmail.com> 
+
+	* monotorrent-dbus.mds: Enable changelog integration
+

@@ -44,10 +44,11 @@ namespace MonoTorrent.DBus
 		private MonoTorrent.Client.Tracker.Tracker tracker;
 		
 
-		public TrackerAdapter (TorrentManager manager, MonoTorrent.Client.Tracker.Tracker tracker)
+		public TrackerAdapter (TorrentManager manager, MonoTorrent.Client.Tracker.Tracker tracker, ObjectPath path)
 		{
 			this.manager = manager;
 			this.tracker = tracker;
+			this.path = path;
 		}
 		
 		

@@ -13,6 +13,7 @@
     <Execute type="None" entry="monotorrent-dbus" />
     <Execute type="None" entry="Sample" />
   </StartMode>
+  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="OneChangeLogInProjectRootDirectory" />
   <Entries>
     <Entry filename="monotorrent-dbus/monotorrent-dbus.mdp" />
     <Entry filename="Sample/Sample.mdp" />

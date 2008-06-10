@@ -30,13 +30,10 @@ namespace MonoTorrent.DBus
 	[Interface ("org.monotorrent.torrentsettings")]
 	public interface ITorrentSettings : IExportable
 	{
-        bool InitialSeedingEnabled { get; set;  }
-        bool FastResumeEnabled { get; set;  }
-        int MaxDownloadSpeed { get; set;  }
-        int MaxUploadSpeed { get; set;  }
-        int MaxConnections { get; set;  }
-        int UploadSlots { get; set;  }
-		int MinimumTimeBetweenReviews { get; set;  }
-		int PercentOfMaxRateToSkipReview { get; set;  }
+        bool InitialSeedingEnabled { get; set; }
+        int MaxDownloadSpeed { get; set; }
+        int MaxUploadSpeed { get; set; }
+        int MaxConnections { get; set; }
+        int UploadSlots { get; set; }
 	}
 }

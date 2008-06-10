@@ -28,6 +28,7 @@ using MonoTorrent.Client;
 
 namespace MonoTorrent.DBus
 {
+	
 	internal class TorrentSettingsAdapter : ITorrentSettings
 	{
 		private ObjectPath path;
@@ -48,11 +49,6 @@ namespace MonoTorrent.DBus
 			set { settings.InitialSeedingEnabled = value; }
 		}
 
-		public bool FastResumeEnabled {
-			get { return settings.FastResumeEnabled; }
-			set { settings.FastResumeEnabled = value; }
-		}
-
 		public int MaxDownloadSpeed {
 			get { return settings.MaxDownloadSpeed; }
 			set { settings.MaxDownloadSpeed = value; }
@@ -71,17 +67,6 @@ namespace MonoTorrent.DBus
 		public int UploadSlots {
 			get { return settings.UploadSlots; }
 			set { settings.UploadSlots = value; }
-		}
-
-		public int MinimumTimeBetweenReviews {
-			get { return settings.MinimumTimeBetweenReviews; }
-			set { settings.MinimumTimeBetweenReviews = value; }
-			
-		}
-
-		public int PercentOfMaxRateToSkipReview {
-			get { return settings.PercentOfMaxRateToSkipReview; }
-			set { settings.PercentOfMaxRateToSkipReview = value; }
 		}
 		
 		public TorrentSettingsAdapter (TorrentSettings settings, ObjectPath path)
