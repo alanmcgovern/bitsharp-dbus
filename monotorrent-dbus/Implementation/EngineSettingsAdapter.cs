@@ -108,5 +108,15 @@ namespace MonoTorrent.DBus
 			get { return settings.SavePath; }
 			set { settings.SavePath = value; }
 		}
+
+		public EncryptionTypes AllowedEncryption {
+			get { return EnumAdapter.Adapt(settings.AllowedEncryption); }
+			set { settings.AllowedEncryption = EnumAdapter.Adapt(value); }
+		}
+
+		public bool PreferEncryption {
+			get { return settings.PreferEncryption; }
+			set { settings.PreferEncryption = true; }
+		}
 	}
 }

@@ -30,10 +30,19 @@ namespace MonoTorrent.DBus
 	[Interface ("org.monotorrent.torrentsettings")]
 	public interface ITorrentSettings : IExportable
 	{
+		// Enable/disable InitialSeeding mode (also known as superseeding)
         bool InitialSeedingEnabled { get; set; }
+		
+		// The maximum download speed for the downloader
         int MaxDownloadSpeed { get; set; }
+		
+		// The maximum upload speed for the downloader
         int MaxUploadSpeed { get; set; }
+		
+		// The maximum open connections for the downloader
         int MaxConnections { get; set; }
+		
+		// The maximum number of available upload slots
         int UploadSlots { get; set; }
 	}
 }

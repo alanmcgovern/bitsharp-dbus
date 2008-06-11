@@ -29,16 +29,23 @@ namespace MonoTorrent.DBus
 	[Interface ("org.monotorrent.torrentfile")]
 	public interface ITorrentFile : IExportable
 	{
+		// The index of the last piece which contains data for this file
 		int EndPieceIndex { get; }
 		
+		// The length of the file in bytes
 		long Length { get; }
 		
+		// The path where the file will be saved to. This is relative
+		// to the 'savePath' supplied to the engine
 		string FilePath { get; }
 		
+		// The progress of the download (between 0 and 1)
 		double Progress { get; }
 		
+		// The priority of this file
 		Priority Priority { get; set; }
 		
+		// The index of the first piece which contains data for this file
 		int StartPieceIndex { get; }
 	}
 }

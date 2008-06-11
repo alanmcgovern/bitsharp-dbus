@@ -92,5 +92,44 @@ namespace MonoTorrent.DBus
 			
 			return MonoTorrent.Common.Priority.Normal;
 		}
+		
+				
+		public static MonoTorrent.Client.Encryption.EncryptionTypes Adapt(EncryptionTypes type)
+
+		{
+			MonoTorrent.Client.Encryption.EncryptionTypes t = 0;
+			
+			if (Has (EncryptionTypes.PlainText, type))
+				t |= MonoTorrent.Client.Encryption.EncryptionTypes.PlainText;
+			if (Has (EncryptionTypes.RC4Full, type))
+				t |= MonoTorrent.Client.Encryption.EncryptionTypes.RC4Full;
+			if (Has (EncryptionTypes.RC4Header, type))
+				t |= MonoTorrent.Client.Encryption.EncryptionTypes.RC4Header;
+			
+			return t;
+		}
+		
+		public static EncryptionTypes Adapt(MonoTorrent.Client.Encryption.EncryptionTypes type)
+		{
+			EncryptionTypes t = EncryptionTypes.None;
+			
+			if (Has (MonoTorrent.Client.Encryption.EncryptionTypes.PlainText, type))
+				t |= EncryptionTypes.PlainText;
+			if (Has (MonoTorrent.Client.Encryption.EncryptionTypes.RC4Full, type))
+				t |= EncryptionTypes.RC4Full;
+			if (Has (MonoTorrent.Client.Encryption.EncryptionTypes.RC4Header, type))
+				t |= EncryptionTypes.RC4Header;
+			
+			return t;
+		}
+		
+		private static bool Has (MonoTorrent.Client.Encryption.EncryptionTypes wanted, MonoTorrent.Client.Encryption.EncryptionTypes actual)
+		{
+			return (wanted & actual) == wanted;
+		}
+		private static bool Has (EncryptionTypes wanted, EncryptionTypes actual)
+		{
+			return (wanted & actual) == wanted;
+		}
 	}
 }

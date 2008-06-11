@@ -8,10 +8,13 @@ using System;
 
 namespace MonoTorrent.DBus
 {
+	[Flags]
 	public enum EncryptionTypes
 	{
-		PlainText,
-		RC4Full,
-		RC4Header
+		None = 0,
+		PlainText = 1,
+		RC4Header = 2,
+		RC4Full = 4,
+		All = PlainText | RC4Header | RC4Full
 	}
 }

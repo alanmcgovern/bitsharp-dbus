@@ -30,14 +30,20 @@ namespace MonoTorrent.DBus
 	[Interface ("org.monotorrent.torrentservice")]
 	public interface ITorrentService
 	{
+		// Returns the names of all available engines
 		string[] AvailableEngines ();
 		
+		// Creates a new engine with the specified name/settings
 		ObjectPath CreateEngine (string name, ObjectPath settings);
 		
+		// Destroys the specified engine along with all registered objects
 		void DestroyEngine (string name);
 		
+		// Retrieves an existing engine by name
 		ObjectPath GetEngine (string name);
 		
+		// Creates a new engine settings object - needed to create
+		// a new engine
 		ObjectPath NewEngineSettings ();
 	}
 }

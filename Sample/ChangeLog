@@ -1,0 +1,5 @@
+2008-06-11  Alan McGovern <alan.mcgovern@gmail.com> 
+
+	* ClientMode.cs: SampleClient now just displays all pre-existing
+	  torrents.
+

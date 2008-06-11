@@ -30,6 +30,8 @@ namespace MonoTorrent.DBus
 	[Interface ("org.monotorrent.torrent")]
 	public interface ITorrent : IExportable
 	{
+		// This represents all the trackers in their tiers. There are N rows of
+		// tiers each of which contains M tracker urls
         string[][] AnnounceUrls { get; }
 		
         string Comment { get; }
@@ -51,10 +53,5 @@ namespace MonoTorrent.DBus
         long Size { get; }
 		
         string TorrentPath { get; }
-//		
-//		
-//		void AddAnnounce (string url);
-//		
-//		void RemoveAnnounce (string url);
 	}
 }

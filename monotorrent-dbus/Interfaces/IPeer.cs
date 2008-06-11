@@ -16,11 +16,6 @@ namespace MonoTorrent.DBus
         bool AmChoking { get; }
         bool AmInterested { get; }
         int AmRequestingPiecesCount { get; }
-        //BitField bitField { get; }
-        //IConnection connection { get; }
-		//PeerIdInternal id { get; }
-        //Software clientApp { get; }
-        //IEncryption encryptor { get; }
 		EncryptionTypes ActiveEncryption { get; }
         int HashFails { get; }
         bool IsChoking { get; }

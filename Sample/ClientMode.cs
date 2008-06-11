@@ -23,6 +23,8 @@
 //
 
 using System;
+using System.Collections.Generic;
+
 using NDesk.DBus;
 using org.freedesktop.DBus;
 using MonoTorrent.DBus;
@@ -45,30 +47,28 @@ namespace Sample
 			engine = ChooseEngine();
 			Console.WriteLine ("Got engine? {0}", engine.Name);
 			
-			IDownloader downloader = GetDownloader ();
+			IDownloader[] downloaders = GetDownloaders ();
 			
-			Console.WriteLine ("Getting ITorrent from: {0}", downloader.Torrent);
-			ITorrent torrent = bus.GetObject<ITorrent> (MainClass.BusName, downloader.Torrent);
-			
-			Console.WriteLine ("Getting files from: {0}", torrent.Files[0]);
-			ITorrentFile[] files = GetFiles(torrent);
-			
-			if (downloader.State == TorrentState.Stopped)
-				downloader.Start ();
-			
-			int counter = 0;
-			while (counter++ < 10)
+			while (true)
 			{
 				System.Threading.Thread.Sleep (1000);
-				//Console.Clear ();
-				Console.WriteLine ("Name:           {0}", torrent.Name);
-				Console.WriteLine ("Progress:       {0:0.00}%", downloader.Progress);
-				Console.WriteLine ("Download Speed: {0:0.00}kB/sec", downloader.DownloadSpeed / 1024.0);
-				Console.WriteLine ("Upload Speed:   {0:0.00}kB/sec", downloader.UploadSpeed / 1024.0);
-				foreach (ITorrentFile file in files)
-					Console.WriteLine ("\t\t{0} - {1:0.00}%", file.FilePath, file.Progress * 100);
+				
+				foreach (IDownloader d in downloaders)
+				{
+					ITorrent torrent = bus.GetObject<ITorrent> (MainClass.BusName, d.Torrent);
+					ITorrentFile[] files = GetFiles(torrent);
+					
+					Console.WriteLine ("Name:           {0}", torrent.Name);
+					Console.WriteLine ("Progress:       {0:0.00}%", d.Progress);
+					Console.WriteLine ("Download Speed: {0:0.00}kB/sec", d.DownloadSpeed / 1024.0);
+					Console.WriteLine ("Upload Speed:   {0:0.00}kB/sec", d.UploadSpeed / 1024.0);
+					foreach (ITorrentFile file in files)
+						Console.WriteLine ("\t\t{0} - {1:0.00}%", file.FilePath, file.Progress * 100);
+					
+					Console.WriteLine();
+					Console.WriteLine();
+				}
 			}
-			downloader.Stop ();
 		}
 		
 		private ITorrentFile[] GetFiles (ITorrent torrent)
@@ -80,40 +80,38 @@ namespace Sample
 			return files;
 		}
 		
-		private IDownloader GetDownloader ()
+		private IDownloader[] GetDownloaders ()
 		{
-			ObjectPath[] downloaders = engine.GetRegisteredDownloaders ();
-			if (downloaders.Length > 0)
-			{
-				Console.WriteLine ("Getting downloader from: {0}", downloaders[0]);
-				return bus.GetObject<IDownloader> (MainClass.BusName, downloaders[0]);
-			}
+			List<IDownloader> downloaders = new List<IDownloader> ();
+
+			foreach (ObjectPath path in engine.GetDownloaders ())
+				downloaders.Add(bus.GetObject<IDownloader> (MainClass.BusName, path));
 			
-			return LoadTorrent ("a.torrent", "/home/alan/Desktop");
+			return downloaders.ToArray();
 		}
-		
-		private IDownloader LoadTorrent (string path, string savePath)
-		{
-			Console.WriteLine ("Loading torrent from disk: {0}", path);
-			ObjectPath downloaderPath = engine.RegisterTorrent (path, savePath);
-			Console.Write ("Created downloader at: {0}", downloaderPath);
-			
-			IDownloader downloader = bus.GetObject<IDownloader> (MainClass.BusName, downloaderPath);
-			ITorrent torrent = bus.GetObject<ITorrent> (MainClass.BusName, downloader.Torrent);
-			Console.WriteLine ("Torrent Name :{0}", torrent.Name);
-			Console.WriteLine ("Torrent Size :{0:0.00}MB", torrent.Size / (1024.0 * 1024.0));
-			Console.WriteLine ("Files:");
-			ObjectPath[] files = torrent.Files;
-			
-			foreach (ObjectPath p in files)
-			{
-				ITorrentFile file = bus.GetObject<ITorrentFile> (MainClass.BusName, p);
-				Console.WriteLine ("\t\t{0}", file.FilePath);
-			}
-			
-			return downloader;
-		}
-		
+//		
+//		private IDownloader LoadTorrent (string path, string savePath)
+//		{
+//			Console.WriteLine ("Loading torrent from disk: {0}", path);
+//			ObjectPath downloaderPath = engine.RegisterTorrent (path, savePath);
+//			Console.Write ("Created downloader at: {0}", downloaderPath);
+//			
+//			IDownloader downloader = bus.GetObject<IDownloader> (MainClass.BusName, downloaderPath);
+//			ITorrent torrent = bus.GetObject<ITorrent> (MainClass.BusName, downloader.Torrent);
+//			Console.WriteLine ("Torrent Name :{0}", torrent.Name);
+//			Console.WriteLine ("Torrent Size :{0:0.00}MB", torrent.Size / (1024.0 * 1024.0));
+//			Console.WriteLine ("Files:");
+//			ObjectPath[] files = torrent.Files;
+//			
+//			foreach (ObjectPath p in files)
+//			{
+//				ITorrentFile file = bus.GetObject<ITorrentFile> (MainClass.BusName, p);
+//				Console.WriteLine ("\t\t{0}", file.FilePath);
+//			}
+//			
+//			return downloader;
+//		}
+//		
 		private IEngine ChooseEngine ()
 		{
 			string[] engines = service.AvailableEngines ();

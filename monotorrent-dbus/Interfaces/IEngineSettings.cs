@@ -31,8 +31,8 @@ namespace MonoTorrent.DBus
 	[Interface ("org.monotorrent.enginesettings")]
 	public interface IEngineSettings : IExportable
 	{
-        //bool AllowLegacyConnections { get; set; }
-
+        EncryptionTypes AllowedEncryption { get; set; }
+				
         bool HaveSupressionEnabled { get; set; }
 
         int GlobalMaxConnections { get; set; }
@@ -50,9 +50,7 @@ namespace MonoTorrent.DBus
         int MaxReadRate { get; set; }
 
         int MaxWriteRate { get; set; }
-
-        //EncryptionTypes AllowedEncryption { get; set; }
-
-        //string SavePath { get; set; }
+		
+        bool PreferEncryption { get; set; }
 	}
 }

@@ -1,5 +1,23 @@
 2008-06-11  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* Interfaces/IEngine.cs, Implementation/EngineAdapter.cs: Split the
+	  loading of a torrent into two explicit steps. 1) load a .torrent
+	  file 2) register it to get a downloader. This allows for much
+	  easier detection of when a torrent is already loaded.
+	* Interfaces/IEngineSettings.cs,
+	  Implementation/EngineSettingsAdapter.cs: Updated EngineSettings to
+	  support the new Encryption API in MonoTorrent
+	* Interfaces/IPeer.cs, Interfaces/ITracker.cs, Interfaces/ITorrent.cs,
+	  Interfaces/ITorrentFile.cs, Interfaces/ITorrentService.cs,
+	  Interfaces/ITorrentSettings.cs: Added comments to the interface
+	  declarations
+	* EnumAdapters/EncryptionTypes.cs: Added a 'None' option in
+	  EncryptionTypes
+	* EnumAdapters/EnumAdapter.cs: Added an adapter for the EncryptionTypes
+	  enum
+
+2008-06-11  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* Implementation/TrackerAdapter.cs: Store the path to the object
 	* Implementation/TorrentSettingsAdapter.cs,
 	  Interfaces/ITorrentSettings.cs: Remove properties which make no
