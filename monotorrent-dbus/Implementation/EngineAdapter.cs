@@ -102,6 +102,7 @@ namespace MonoTorrent.DBus
 			EnsurePath (StoragePath);
 			
 			downloaders = new Dictionary<ObjectPath, TorrentManagerAdapter> (new ObjectPathComparer());
+			torrents = new Dictionary<ObjectPath,TorrentAdapter> ();
 			
 			LoadState ();
 		}
@@ -120,7 +121,11 @@ namespace MonoTorrent.DBus
 
 		public ObjectPath GetDownloader (ObjectPath torrent)
 		{
-			return downloaders[torrent].Path;
+			foreach (IDownloader d in downloaders.Values)
+				if (d.Torrent == torrents[torrent].Path)
+					return d.Path;
+			
+			throw new KeyNotFoundException ("torrent");
 		}
 
 		public ObjectPath[] GetDownloaders ()
@@ -132,9 +137,8 @@ namespace MonoTorrent.DBus
 		
 		public bool IsRegistered (ObjectPath torrent)
 		{
-			TorrentAdapter adapter = torrents[torrent];
 			foreach (IDownloader d in downloaders.Values)
-				if (d.Torrent == adapter.Path)
+				if (d.Torrent == torrents[torrent].Path)
 					return true;
 			
 			return false;
@@ -152,27 +156,35 @@ namespace MonoTorrent.DBus
 			{
 				string[] parts = path.Split ('/');
 				string filename = parts.Length > 0 ? System.IO.Path.Combine (StoragePath, parts[parts.Length - 1]) : "";
-				Console.WriteLine ("Downloading: {0} to {1}", path, filename);
+
 				torrent = Torrent.Load (new Uri(path), filename);
 			}
-			
+
 			foreach (TorrentAdapter t in torrents.Values)
+			{
 				if (Toolbox.ByteMatch(t.Torrent.InfoHash, torrent.InfoHash))
+				{
+					Console.WriteLine ("Returning an existing torrent in memory");
 					return t.Path;
+				}
+			}
 			
+			Console.WriteLine ("Loading a torrent from disk");
 			ObjectPath torrentPath = new ObjectPath (string.Format ("{0}/torrent{1}", Path.ToString (), torrentNumber++));
 			TorrentAdapter tAdapter = new TorrentAdapter (torrent, torrentPath);
+
+			torrents.Add (tAdapter.Path, tAdapter);
 			TorrentService.Bus.Register (tAdapter.Path, tAdapter);
 			return torrentPath;
 		}
 
 		public ObjectPath RegisterTorrent (ObjectPath torrent, string savePath)
 		{
-			if (path == null)
-				throw new ArgumentNullException ("path");
+			if (torrent == null)
+				throw new ArgumentNullException ("torrent");
 			if (savePath == null)
 				throw new ArgumentNullException ("savePath");
-						
+
 			TorrentSettings settings = new TorrentSettings ();
 			TorrentManager manager = new TorrentManager (torrents[torrent].Torrent, savePath, settings);
 			
@@ -208,6 +220,7 @@ namespace MonoTorrent.DBus
 			
 			engine.Register (manager);
 			downloaders.Add (mAdapter.Path, mAdapter);
+			
 			return mAdapter.Path;
 		}
 		
@@ -231,8 +244,10 @@ namespace MonoTorrent.DBus
 			foreach (TorrentData d in data)
 			{
 				Console.WriteLine ("Reloading: {0}", d.TorrentPath);
+
 				TorrentAdapter torrent = torrents[LoadTorrent(d.TorrentPath)];
 				TorrentManager manager = new TorrentManager(torrent.Torrent, d.SavePath, d.Settings, d.FastResume);
+				
 				Load (torrent, d.Settings, manager);
 			}
 		}

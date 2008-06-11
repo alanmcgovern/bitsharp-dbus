@@ -1,5 +1,10 @@
 2008-06-11  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* Implementation/EngineAdapter.cs: Correctly check if a torrent is
+	  registered and correctly find the right downloader to return.
+
+2008-06-11  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* Interfaces/IEngine.cs, Implementation/EngineAdapter.cs: Split the
 	  loading of a torrent into two explicit steps. 1) load a .torrent
 	  file 2) register it to get a downloader. This allows for much
