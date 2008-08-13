@@ -34,16 +34,9 @@ namespace MonoTorrent.DBus
 		string[] AvailableEngines ();
 		
 		// Creates a new engine with the specified name/settings
-		ObjectPath CreateEngine (string name, ObjectPath settings);
+		ObjectPath GetEngine (string name);
 		
 		// Destroys the specified engine along with all registered objects
 		void DestroyEngine (string name);
-		
-		// Retrieves an existing engine by name
-		ObjectPath GetEngine (string name);
-		
-		// Creates a new engine settings object - needed to create
-		// a new engine
-		ObjectPath NewEngineSettings ();
 	}
 }

@@ -130,25 +130,10 @@ namespace Sample
 				name = Console.ReadLine ();
 			}
 			
-			ObjectPath enginePath;
-			if (Array.Exists(engines, delegate (string s) { return s == name; }))
-			{
-				enginePath = service.GetEngine (name);
-				Console.WriteLine ("Got existing engine");
-			}
-			else
-			{
-				ObjectPath settingsPath = service.NewEngineSettings ();
-				Console.WriteLine ("Created new engine settings at: {0}", settingsPath);
-				
-				IEngineSettings settings = bus.GetObject<IEngineSettings>(MainClass.BusName, settingsPath);
-				Console.WriteLine ("Got settings? {0}", settings != null);
-				
-				enginePath = service.CreateEngine (name, settings.Path);
-				Console.WriteLine ("Engine created at: {0}", engine);
-			}
+			ObjectPath enginePath = service.GetEngine (name);
+            Console.WriteLine ("Got engine at: {0}", enginePath);
 			
-			return bus.GetObject<IEngine>(MainClass.BusName, enginePath);
+            return bus.GetObject<IEngine>(MainClass.BusName, enginePath);
 		}
 	}
 }

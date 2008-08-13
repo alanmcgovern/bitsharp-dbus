@@ -39,7 +39,7 @@ namespace MonoTorrent.DBus
 		private const string SettingsFile = "settings";
 		private readonly string StoragePath;
 		
-		private readonly string DownloaderPath = path.ToString () + "/downloaders/{0}";
+		private readonly string DownloaderPath;
 
 		private Dictionary <ObjectPath, TorrentManagerAdapter> downloaders;
 		private Dictionary <ObjectPath, TorrentAdapter> torrents;
@@ -93,6 +93,7 @@ namespace MonoTorrent.DBus
 			this.engineSettings = settings;
 			this.path = path;
 			
+            DownloaderPath = path.ToString () + "/downloaders/{0}";
 			StoragePath = Environment.GetFolderPath (Environment.SpecialFolder.ApplicationData);
 			
 			StoragePath = System.IO.Path.Combine (StoragePath, "monotorrent-dbus");
@@ -119,72 +120,29 @@ namespace MonoTorrent.DBus
 			engine.Dispose ();
 		}
 
-		public ObjectPath GetDownloader (ObjectPath torrent)
-		{
-			foreach (IDownloader d in downloaders.Values)
-				if (d.Torrent == torrents[torrent].Path)
-					return d.Path;
-			
-			throw new KeyNotFoundException ("torrent");
-		}
-
 		public ObjectPath[] GetDownloaders ()
 		{
 			ObjectPath[] paths = new ObjectPath[downloaders.Count];
 			downloaders.Keys.CopyTo (paths, 0);
 			return paths;
 		}
-		
-		public bool IsRegistered (ObjectPath torrent)
+        
+		public ObjectPath RegisterTorrent (string torrentPath, string savePath)
 		{
-			foreach (IDownloader d in downloaders.Values)
-				if (d.Torrent == torrents[torrent].Path)
-					return true;
-			
-			return false;
-		}
-
-		public ObjectPath LoadTorrent (string path)
-		{
-			Torrent torrent;
-			
-			if (System.IO.File.Exists (path))
-			{
-				torrent = Torrent.Load (path);
-			}
-			else
-			{
-				string[] parts = path.Split ('/');
-				string filename = parts.Length > 0 ? System.IO.Path.Combine (StoragePath, parts[parts.Length - 1]) : "";
-
-				torrent = Torrent.Load (new Uri(path), filename);
-			}
-
-			foreach (TorrentAdapter t in torrents.Values)
-			{
-				if (Toolbox.ByteMatch(t.Torrent.InfoHash, torrent.InfoHash))
-				{
-					Console.WriteLine ("Returning an existing torrent in memory");
-					return t.Path;
-				}
-			}
-			
-			Console.WriteLine ("Loading a torrent from disk");
-			ObjectPath torrentPath = new ObjectPath (string.Format ("{0}/torrent{1}", Path.ToString (), torrentNumber++));
-			TorrentAdapter tAdapter = new TorrentAdapter (torrent, torrentPath);
-
-			torrents.Add (tAdapter.Path, tAdapter);
-			TorrentService.Bus.Register (tAdapter.Path, tAdapter);
-			return torrentPath;
-		}
-
-		public ObjectPath RegisterTorrent (ObjectPath torrent, string savePath)
-		{
-			if (torrent == null)
+			if (torrentPath == null)
 				throw new ArgumentNullException ("torrent");
 			if (savePath == null)
 				throw new ArgumentNullException ("savePath");
 
+            // Get the TorrentAdapter object
+            ObjectPath torrent = LoadTorrent (torrentPath);
+            
+            // See if there is already a downloader for the torrent
+            foreach (TorrentManagerAdapter m in downloaders.Values)
+                if (m.Torrent == torrent)
+                    return m.Path;
+
+            // If there is no existing downloader, create a downloader
 			TorrentSettings settings = new TorrentSettings ();
 			TorrentManager manager = new TorrentManager (torrents[torrent].Torrent, savePath, settings);
 			
@@ -224,6 +182,40 @@ namespace MonoTorrent.DBus
 			return mAdapter.Path;
 		}
 		
+        private ObjectPath LoadTorrent (string path)
+		{
+			Torrent torrent;
+			
+			if (System.IO.File.Exists (path))
+			{
+				torrent = Torrent.Load (path);
+			}
+			else
+			{
+				string[] parts = path.Split ('/');
+				string filename = parts.Length > 0 ? System.IO.Path.Combine (StoragePath, parts[parts.Length - 1]) : "";
+
+				torrent = Torrent.Load (new Uri(path), filename);
+			}
+
+			foreach (TorrentAdapter t in torrents.Values)
+			{
+				if (Toolbox.ByteMatch(t.Torrent.InfoHash, torrent.InfoHash))
+				{
+					Console.WriteLine ("Returning an existing torrent in memory");
+					return t.Path;
+				}
+			}
+			
+			Console.WriteLine ("Loading a torrent from disk");
+			ObjectPath torrentPath = new ObjectPath (string.Format ("{0}/torrent{1}", Path.ToString (), torrentNumber++));
+			TorrentAdapter tAdapter = new TorrentAdapter (torrent, torrentPath);
+
+			torrents.Add (tAdapter.Path, tAdapter);
+			TorrentService.Bus.Register (tAdapter.Path, tAdapter);
+			return torrentPath;
+		}
+        
 		private void LoadState ()
 		{
 			string settings = System.IO.Path.Combine (StoragePath, SettingsFile);

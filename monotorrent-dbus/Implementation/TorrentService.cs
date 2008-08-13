@@ -70,7 +70,7 @@ namespace MonoTorrent.DBus
 			return result;
 		}
 		
-		public ObjectPath CreateEngine (string name, ObjectPath engineSettings)
+		private ObjectPath CreateEngine (string name, ObjectPath engineSettings)
 		{
 			if (string.IsNullOrEmpty (name))
 				throw new ArgumentNullException ("name");
@@ -115,10 +115,12 @@ namespace MonoTorrent.DBus
 		
 		public ObjectPath GetEngine (string name)
 		{
+            if (!engines.ContainsKey (name))
+                CreateEngine(name, NewEngineSettings());
 			return engines[name].Path;
 		}
 		
-		public ObjectPath NewEngineSettings ()
+		private ObjectPath NewEngineSettings ()
 		{
 			ObjectPath path = new ObjectPath (string.Format (EngineSettingsPath, engineSettingsNumber++));
 			EngineSettingsAdapter adapter = new EngineSettingsAdapter (new EngineSettings (), path);

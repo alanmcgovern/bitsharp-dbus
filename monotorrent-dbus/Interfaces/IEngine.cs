@@ -20,24 +20,14 @@ namespace MonoTorrent.DBus
 
 		// The combined upload speed of all active downloaders
         int TotalUploadSpeed { get; }
-
-		// Returns true if the ITorrent is already loaded in the engine
-		bool IsRegistered (ObjectPath torrent);
 		
-		// Parses an ITorrent from a .torrent file
-		ObjectPath LoadTorrent (string path);
-		
-		// Returns an existing downloader for the ITorrent
-		ObjectPath GetDownloader (ObjectPath torrent);
-		
-		// Returns all downloaders
+        // Returns all downloaders
 		ObjectPath[] GetDownloaders ();
-		
-		// Create an IDownloader for the specified ITorrent
-		// The IDownloader will save data to the specified path
-		ObjectPath RegisterTorrent (ObjectPath torrent, string savePath);
-		
-		// Removes the IDownloader from the engine
+        
+		// Parses an ITorrent from a .torrent file
+		ObjectPath RegisterTorrent (string torrentPath, string savePath);
+        
+        // Removes the IDownloader from the engine
 		void UnregisterTorrent (ObjectPath downloader);
     }
 }

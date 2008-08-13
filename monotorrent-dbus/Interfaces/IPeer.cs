@@ -23,10 +23,9 @@ namespace MonoTorrent.DBus
         int IsRequestingPiecesCount { get; }
         bool IsSeeder { get; }
         bool IsConnected { get; }
-        string Location { get; }
         string PeerId { get; }
         int PiecesSent { get; }
-        int SendQueueLength { get; }
         bool SupportsFastPeer { get; }
+        string Uri { get; } 
 	}
 }

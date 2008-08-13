@@ -71,11 +71,7 @@ namespace MonoTorrent.DBus
 		}
 
 		public bool IsConnected {
-			get { return id.IsValid; }
-		}
-
-		public string Location {
-			get { return id.Location.ToString (); }
+			get { return id.IsConnected; }
 		}
 		
 		public ObjectPath Path {
@@ -83,19 +79,19 @@ namespace MonoTorrent.DBus
 		}
 
 		public string PeerId {
-			get { return id.Name; }
+			get { return id.PeerID; }
 		}
 
 		public int PiecesSent {
 			get { return id.PiecesSent; }
 		}
 
-		public int SendQueueLength {
-			get { return id.SendQueueLength; }
-		}
-
 		public bool SupportsFastPeer {
 			get { return id.SupportsFastPeer; }
 		}
+        
+        public string Uri {
+            get { return id.Uri.ToString(); }
+        }
 	}
 }
