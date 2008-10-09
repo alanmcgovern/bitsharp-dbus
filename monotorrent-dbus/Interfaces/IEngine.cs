@@ -6,9 +6,13 @@ using NDesk.DBus;
 
 namespace MonoTorrent.DBus
 {
+	public delegate void StatsUpdateHandler();
+	
 	[Interface ("org.monotorrent.engine")]
     public interface IEngine : IExportable
     {
+		event StatsUpdateHandler StatsUpdate;
+		
 		// The name the engine is identified by
 		string Name { get; }
 

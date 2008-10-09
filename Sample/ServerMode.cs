@@ -25,7 +25,6 @@
 using System;
 using NDesk.DBus;
 using org.freedesktop.DBus;
-using MonoTorrent.Client;
 using MonoTorrent.DBus;
 
 namespace Sample

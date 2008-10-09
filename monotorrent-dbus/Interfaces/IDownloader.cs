@@ -11,10 +11,13 @@ namespace MonoTorrent.DBus
 	//public delegate void PeerDisconnectedHandler (PeerConnectionEventArgs e);
 	//public delegate void PieceHashedHandler (PieceHashedEventArgs e);
 	public delegate void TorrentStateChangedHandler (ObjectPath downloader, TorrentState oldState, TorrentState newState);
-
+	public delegate void PeerHandler (ObjectPath downloader, ObjectPath peer);
+	
 	[Interface ("org.monotorrent.downloader")]
     public interface IDownloader : IExportable
     {
+		event PeerHandler PeerConnected;
+		event PeerHandler PeerDisconnected;
         event TorrentStateChangedHandler StateChanged;
 
         bool Complete { get; }
@@ -31,11 +34,11 @@ namespace MonoTorrent.DBus
 		
 		ObjectPath Torrent { get; }
 		
-		ObjectPath[][] Trackers { get; }
+		//ObjectPath[][] Trackers { get; }
 
         int UploadSpeed { get; }
 
-		void AddTracker (string uri);
+		//void AddTracker (string uri);
 		
 		ObjectPath[] GetPeers ();
     
@@ -43,7 +46,7 @@ namespace MonoTorrent.DBus
 		
         void Pause();
 
-		void RemoveTracker (ObjectPath path);
+		//void RemoveTracker (ObjectPath path);
 		
         void Start();
 

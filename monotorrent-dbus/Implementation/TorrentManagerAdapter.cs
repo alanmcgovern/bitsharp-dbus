@@ -30,11 +30,14 @@ using NDesk.DBus;
 
 namespace MonoTorrent.DBus
 {
+	public delegate void PieceHashedHandler (ObjectPath downloader, int index, bool passed, float progress);
+	
 	internal class TorrentManagerAdapter : IDownloader
 	{
-		//public event PeerConnectedHandler PeerConnected;
-		//public event PeerDisconnectedHandler PeerDisconnected;
-		//public event PieceHashedHandler PieceHashed;
+		public event PeerHandler PeerConnected;
+		public event PeerHandler PeerDisconnected;
+		public event PieceHashedHandler PieceHashed;
+		
 		public event TorrentStateChangedHandler StateChanged;
 		
 		private ObjectPath path;
@@ -58,9 +61,10 @@ namespace MonoTorrent.DBus
 				if (StateChanged != null)
 					StateChanged (path, EnumAdapter.Adapt(e.OldState), EnumAdapter.Adapt (e.NewState));
 			};
-			
+
 			manager.PeerConnected += AddPeer;
 			manager.PeerDisconnected += RemovePeer;
+			manager.PieceHashed += OnPieceHashed;
 			
 			LoadTrackers (manager.TrackerManager.TrackerTiers);
 		}
@@ -175,7 +179,8 @@ namespace MonoTorrent.DBus
 
 		public ObjectPath[] GetPeers ()
 		{
-			throw new NotImplementedException();
+			lock (peers)
+				return peers.ConvertAll<ObjectPath>( delegate (PeerAdapter p) { return p.Path;  }).ToArray();
 		}
 
 		public void RemoveTracker (ObjectPath path)
@@ -190,6 +195,10 @@ namespace MonoTorrent.DBus
 			TorrentService.Bus.Register (path, d);
 			lock (peers)
 				peers.Add(d);
+			
+			PeerHandler h = PeerConnected;
+			if (h != null)
+				h (Path, path);
 		}
 		
 		public void RemovePeer(object sender, PeerConnectionEventArgs e)
@@ -202,9 +211,21 @@ namespace MonoTorrent.DBus
 						continue;
 					
 					peers.Remove(p);
+
+					PeerHandler h = PeerDisconnected;
+					if (h != null)
+						h (Path, p.Path);
 					break;
 				}
 			}
+		}
+
+		private void OnPieceHashed (object sender, PieceHashedEventArgs e)
+		{
+			float progress = EnumAdapter.Adapt(manager.State) == TorrentState.Hashing ? (float)e.PieceIndex / manager.Bitfield.Length : 1;
+			PieceHashedHandler h = PieceHashed;
+			if (h != null)
+				h (Path, e.PieceIndex, e.HashPassed, progress);
 		}
 	}
 }

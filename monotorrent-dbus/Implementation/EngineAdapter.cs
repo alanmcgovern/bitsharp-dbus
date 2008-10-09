@@ -36,6 +36,8 @@ namespace MonoTorrent.DBus
 {
 	internal class EngineAdapter : IEngine
 	{
+		public event StatsUpdateHandler StatsUpdate;
+		
 		private const string SettingsFile = "settings";
 		private readonly string StoragePath;
 		
@@ -104,7 +106,12 @@ namespace MonoTorrent.DBus
 			
 			downloaders = new Dictionary<ObjectPath, TorrentManagerAdapter> (new ObjectPathComparer());
 			torrents = new Dictionary<ObjectPath,TorrentAdapter> ();
-			
+
+			engine.StatsUpdate += delegate {
+				StatsUpdateHandler h = StatsUpdate;
+				if (h != null)
+					h ();
+			};
 			LoadState ();
 		}
 
