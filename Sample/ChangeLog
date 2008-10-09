@@ -1,3 +1,8 @@
+2008-10-10  Alan McGovern  <amcgovern@novell.com>
+
+	* ClientMode.cs: Don't export properties over dbus, NDesk.DBus has
+	issues with setters. Update the API to support that.
+
 2008-06-11  Alan McGovern <alan.mcgovern@gmail.com> 
 
 	* ClientMode.cs: SampleClient now just displays all pre-existing

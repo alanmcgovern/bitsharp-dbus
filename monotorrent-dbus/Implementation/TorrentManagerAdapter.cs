@@ -227,5 +227,80 @@ namespace MonoTorrent.DBus
 			if (h != null)
 				h (Path, e.PieceIndex, e.HashPassed, progress);
 		}
+
+		#region IDownloader implementation 
+		
+		ObjectPath IExportable.GetPath ()
+		{
+			return Path;
+		}
+		
+		bool IDownloader.GetComplete ()
+		{
+			return Complete;
+		}
+		
+		int IDownloader.GetDownloadSpeed ()
+		{
+			return DownloadSpeed;
+		}
+		
+		bool IDownloader.GetHashChecked ()
+		{
+			return HashChecked;
+		}
+		
+		double IDownloader.GetProgress ()
+		{
+			return Progress;
+		}
+		
+		ObjectPath IDownloader.GetSettings ()
+		{
+			return Settings;
+		}
+		
+		TorrentState IDownloader.GetState ()
+		{
+			return State;
+		}
+		
+		ObjectPath IDownloader.GetTorrent ()
+		{
+			return Torrent;
+		}
+		
+		int IDownloader.GetUploadSpeed ()
+		{
+			return UploadSpeed;
+		}
+		
+		ObjectPath[] IDownloader.GetPeers ()
+		{
+			return GetPeers ();
+		}
+		
+		void IDownloader.HashCheck (bool autoStart)
+		{
+			HashCheck (autoStart);
+		}
+		
+		void IDownloader.Pause ()
+		{
+			Pause ();
+		}
+		
+		void IDownloader.Start ()
+		{
+			Start ();
+		}
+		
+		void IDownloader.Stop ()
+		{
+			Stop ();
+		}
+		
+		#endregion 
+		
 	}
 }

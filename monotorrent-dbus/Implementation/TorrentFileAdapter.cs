@@ -61,6 +61,52 @@ namespace MonoTorrent.DBus
 		public int StartPieceIndex {
 			get { return file.StartPieceIndex; }
 		}
+
+		
+		#region ITorrentFile implementation 
+
+		ObjectPath IExportable.GetPath ()
+		{
+			return Path;
+		}
+		
+		int ITorrentFile.GetEndPieceIndex ()
+		{
+			return EndPieceIndex;
+		}
+		
+		long ITorrentFile.GetLength ()
+		{
+			return Length;
+		}
+		
+		string ITorrentFile.GetFilePath ()
+		{
+			return FilePath;
+		}
+		
+		double ITorrentFile.GetProgress ()
+		{
+			return Progress;
+		}
+		
+		Priority ITorrentFile.GetPriority ()
+		{
+			return Priority;
+		}
+		
+		void ITorrentFile.SetPriority (Priority priority)
+		{
+			Priority = priority;
+		}
+		
+		int ITorrentFile.GetStartPieceIndex ()
+		{
+			return StartPieceIndex;
+		}
+		
+		#endregion 
+		
 		
 		
 		public TorrentFileAdapter(TorrentFile file, ObjectPath path)

@@ -14,42 +14,42 @@ namespace MonoTorrent.DBus
 	public delegate void PeerHandler (ObjectPath downloader, ObjectPath peer);
 	
 	[Interface ("org.monotorrent.downloader")]
-    public interface IDownloader : IExportable
-    {
+	public interface IDownloader : IExportable
+	{
 		event PeerHandler PeerConnected;
 		event PeerHandler PeerDisconnected;
-        event TorrentStateChangedHandler StateChanged;
+		event TorrentStateChangedHandler StateChanged;
 
-        bool Complete { get; }
+		bool GetComplete ();
 
-        int DownloadSpeed { get; }
+		int GetDownloadSpeed ();
 
-        bool HashChecked { get; }
+		bool GetHashChecked ();
 
-        double Progress { get; }
+		double GetProgress ();
 
-        ObjectPath Settings { get; }
+		ObjectPath GetSettings ();
 
-        TorrentState State { get; }
+		TorrentState GetState ();
 		
-		ObjectPath Torrent { get; }
+		ObjectPath GetTorrent ();
 		
-		//ObjectPath[][] Trackers { get; }
+		//ObjectPath[][] Trackers ();
 
-        int UploadSpeed { get; }
+		int GetUploadSpeed ();
 
 		//void AddTracker (string uri);
 		
 		ObjectPath[] GetPeers ();
-    
+	
 		void HashCheck(bool autoStart);
 		
-        void Pause();
+		void Pause();
 
 		//void RemoveTracker (ObjectPath path);
 		
-        void Start();
+		void Start();
 
-        void Stop();
-    }
+		void Stop();
+	}
 }

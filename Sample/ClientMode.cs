@@ -45,7 +45,7 @@ namespace Sample
 			Console.WriteLine ("Got service? {0}", service != null);
 			
 			engine = ChooseEngine();
-			Console.WriteLine ("Got engine? {0}", engine.Name);
+			Console.WriteLine ("Got engine? {0}", engine.GetName());
 			
 			IDownloader[] downloaders = GetDownloaders ();
 			
@@ -55,15 +55,15 @@ namespace Sample
 				
 				foreach (IDownloader d in downloaders)
 				{
-					ITorrent torrent = bus.GetObject<ITorrent> (MainClass.BusName, d.Torrent);
+					ITorrent torrent = bus.GetObject<ITorrent> (MainClass.BusName, d.GetTorrent());
 					ITorrentFile[] files = GetFiles(torrent);
 					
-					Console.WriteLine ("Name:           {0}", torrent.Name);
-					Console.WriteLine ("Progress:       {0:0.00}%", d.Progress);
-					Console.WriteLine ("Download Speed: {0:0.00}kB/sec", d.DownloadSpeed / 1024.0);
-					Console.WriteLine ("Upload Speed:   {0:0.00}kB/sec", d.UploadSpeed / 1024.0);
+					Console.WriteLine ("Name:	 	  {0}", torrent.GetName ());
+					Console.WriteLine ("Progress:	   {0:0.00}%", d.GetProgress ());
+					Console.WriteLine ("Download Speed: {0:0.00}kB/sec", d.GetDownloadSpeed () / 1024.0);
+					Console.WriteLine ("Upload Speed:   {0:0.00}kB/sec", d.GetUploadSpeed () / 1024.0);
 					foreach (ITorrentFile file in files)
-						Console.WriteLine ("\t\t{0} - {1:0.00}%", file.FilePath, file.Progress * 100);
+						Console.WriteLine ("\t\t{0} - {1:0.00}%", file.GetFilePath (), file.GetProgress () * 100);
 					
 					Console.WriteLine();
 					Console.WriteLine();
@@ -73,7 +73,7 @@ namespace Sample
 		
 		private ITorrentFile[] GetFiles (ITorrent torrent)
 		{
-			ObjectPath[] paths = torrent.Files;
+			ObjectPath[] paths = torrent.GetFiles ();
 			ITorrentFile[] files = new ITorrentFile[paths.Length];
 			for (int i=0; i < paths.Length; i++)
 				files[i] = bus.GetObject<ITorrentFile> (MainClass.BusName, paths[i]);
@@ -114,7 +114,7 @@ namespace Sample
 //		
 		private IEngine ChooseEngine ()
 		{
-			string[] engines = service.AvailableEngines ();
+			string[] engines = service.GetAvailableEngines ();
 			
 			Console.WriteLine ("Which engine would you like to connect to?");
 			Console.WriteLine ("Alternatively, enter a new name to create a new engine");
@@ -131,9 +131,9 @@ namespace Sample
 			}
 			
 			ObjectPath enginePath = service.GetEngine (name);
-            Console.WriteLine ("Got engine at: {0}", enginePath);
+			Console.WriteLine ("Got engine at: {0}", enginePath);
 			
-            return bus.GetObject<IEngine>(MainClass.BusName, enginePath);
+			return bus.GetObject<IEngine>(MainClass.BusName, enginePath);
 		}
 	}
 }

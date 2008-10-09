@@ -81,7 +81,7 @@ namespace MonoTorrent.DBus
 			if (engines.ContainsKey (name))
 				return engines[name].Path;
 
-			Console.WriteLine ("Settings: {0}    -    {1}", engineSettings, engineSettings);
+			Console.WriteLine ("Settings: {0}	-	{1}", engineSettings, engineSettings);
 			IEngineSettings settings = this.engineSettings[engineSettings];
 
 			ObjectPath path = new ObjectPath (string.Format (EnginePath, name));
@@ -115,8 +115,8 @@ namespace MonoTorrent.DBus
 		
 		public ObjectPath GetEngine (string name)
 		{
-            if (!engines.ContainsKey (name))
-                CreateEngine(name, NewEngineSettings());
+	 	   if (!engines.ContainsKey (name))
+	 	 	  CreateEngine(name, NewEngineSettings());
 			return engines[name].Path;
 		}
 		
@@ -130,5 +130,25 @@ namespace MonoTorrent.DBus
 			
 			return adapter.Path;
 		}
+
+		#region ITorrentService implementation 
+		
+		string[] ITorrentService.GetAvailableEngines ()
+		{
+			return AvailableEngines ();
+		}
+		
+		ObjectPath ITorrentService.GetEngine (string name)
+		{
+			return GetEngine (name);
+		}
+		
+		void ITorrentService.DestroyEngine (string name)
+		{
+			DestroyEngine (name);
+		}
+		
+		#endregion 
+		
 	}
 }

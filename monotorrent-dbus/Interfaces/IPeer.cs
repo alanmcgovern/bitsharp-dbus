@@ -13,19 +13,19 @@ namespace MonoTorrent.DBus
 	[Interface ("org.monotorrent.peer")]
 	public interface IPeer : IExportable
 	{
-        bool AmChoking { get; }
-        bool AmInterested { get; }
-        int AmRequestingPiecesCount { get; }
-		EncryptionTypes ActiveEncryption { get; }
-        int HashFails { get; }
-        bool IsChoking { get; }
-        bool IsInterested { get; }
-        int IsRequestingPiecesCount { get; }
-        bool IsSeeder { get; }
-        bool IsConnected { get; }
-        string PeerId { get; }
-        int PiecesSent { get; }
-        bool SupportsFastPeer { get; }
-        string Uri { get; } 
+		bool GetAmChoking ();
+		bool GetAmInterested ();
+		int GetAmRequestingPiecesCount ();
+		EncryptionTypes GetActiveEncryption ();
+		int GetHashFails ();
+		bool GetIsChoking ();
+		bool GetIsInterested ();
+		int GetIsRequestingPiecesCount ();
+		bool GetIsSeeder ();
+		bool GetIsConnected ();
+		string GetPeerId ();
+		int GetPiecesSent ();
+		bool GetSupportsFastPeer ();
+		string GetUri (); 
 	}
 }

@@ -95,7 +95,7 @@ namespace MonoTorrent.DBus
 			this.engineSettings = settings;
 			this.path = path;
 			
-            DownloaderPath = path.ToString () + "/downloaders/{0}";
+	 	   DownloaderPath = path.ToString () + "/downloaders/{0}";
 			StoragePath = Environment.GetFolderPath (Environment.SpecialFolder.ApplicationData);
 			
 			StoragePath = System.IO.Path.Combine (StoragePath, "monotorrent-dbus");
@@ -133,7 +133,7 @@ namespace MonoTorrent.DBus
 			downloaders.Keys.CopyTo (paths, 0);
 			return paths;
 		}
-        
+		
 		public ObjectPath RegisterTorrent (string torrentPath, string savePath)
 		{
 			if (torrentPath == null)
@@ -141,15 +141,15 @@ namespace MonoTorrent.DBus
 			if (savePath == null)
 				throw new ArgumentNullException ("savePath");
 
-            // Get the TorrentAdapter object
-            ObjectPath torrent = LoadTorrent (torrentPath);
-            
-            // See if there is already a downloader for the torrent
-            foreach (TorrentManagerAdapter m in downloaders.Values)
-                if (m.Torrent == torrent)
-                    return m.Path;
+			// Get the TorrentAdapter object
+			ObjectPath torrent = LoadTorrent (torrentPath);
+			
+			// See if there is already a downloader for the torrent
+			foreach (TorrentManagerAdapter m in downloaders.Values)
+				if (m.Torrent == torrent)
+					return m.Path;
 
-            // If there is no existing downloader, create a downloader
+			// If there is no existing downloader, create a downloader
 			TorrentSettings settings = new TorrentSettings ();
 			TorrentManager manager = new TorrentManager (torrents[torrent].Torrent, savePath, settings);
 			
@@ -189,7 +189,7 @@ namespace MonoTorrent.DBus
 			return mAdapter.Path;
 		}
 		
-        private ObjectPath LoadTorrent (string path)
+		private ObjectPath LoadTorrent (string path)
 		{
 			Torrent torrent;
 			
@@ -222,7 +222,7 @@ namespace MonoTorrent.DBus
 			TorrentService.Bus.Register (tAdapter.Path, tAdapter);
 			return torrentPath;
 		}
-        
+		
 		private void LoadState ()
 		{
 			string settings = System.IO.Path.Combine (StoragePath, SettingsFile);
@@ -266,5 +266,50 @@ namespace MonoTorrent.DBus
 			
 			System.IO.File.WriteAllBytes (System.IO.Path.Combine (StoragePath, SettingsFile), list.Encode ());
 		}
+
+		
+		#region IEngine implementation 
+
+		ObjectPath IExportable.GetPath ()
+		{
+			return Path;
+		}
+		
+		string IEngine.GetName ()
+		{
+			return Name;
+		}
+		
+		ObjectPath IEngine.GetSettings ()
+		{
+			return Settings;
+		}
+		
+		int IEngine.GetTotalDownloadSpeed ()
+		{
+			return TotalDownloadSpeed;
+		}
+		
+		int IEngine.GetTotalUploadSpeed ()
+		{
+			return TotalUploadSpeed;
+		}
+		
+		ObjectPath[] IEngine.GetDownloaders ()
+		{
+			return GetDownloaders();
+		}
+		
+		ObjectPath IEngine.RegisterTorrent (string torrentPath, string savePath)
+		{
+			return RegisterTorrent (torrentPath, savePath);
+		}
+		
+		void IEngine.UnregisterTorrent (ObjectPath downloader)
+		{
+			UnregisterTorrent (downloader);
+		}
+		
+		#endregion 
 	}
 }

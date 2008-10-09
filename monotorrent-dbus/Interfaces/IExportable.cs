@@ -30,6 +30,6 @@ namespace MonoTorrent.DBus
 	[Interface ("org.monotorrent.exportable")]
 	public interface IExportable
 	{
-		ObjectPath Path { get; }
+		ObjectPath GetPath ();
 	}
 }

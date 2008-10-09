@@ -89,9 +89,90 @@ namespace MonoTorrent.DBus
 		public bool SupportsFastPeer {
 			get { return id.SupportsFastPeer; }
 		}
-        
-        public string Uri {
-            get { return id.Uri.ToString(); }
-        }
+		
+		public string Uri {
+			get { return id.Uri.ToString(); }
+		}
+
+		
+		#region IPeer implementation 
+
+		ObjectPath IExportable.GetPath ()
+		{
+			return Path;
+		}
+		
+		bool IPeer.GetAmChoking ()
+		{
+			return AmChoking;
+		}
+		
+		bool IPeer.GetAmInterested ()
+		{
+			return AmInterested;
+		}
+		
+		int IPeer.GetAmRequestingPiecesCount ()
+		{
+			return AmRequestingPiecesCount;
+		}
+		
+		EncryptionTypes IPeer.GetActiveEncryption ()
+		{
+			return ActiveEncryption;
+		}
+		
+		int IPeer.GetHashFails ()
+		{
+			return HashFails;
+		}
+		
+		bool IPeer.GetIsChoking ()
+		{
+			return IsChoking;;
+		}
+		
+		bool IPeer.GetIsInterested ()
+		{
+			return IsInterested;
+		}
+		
+		int IPeer.GetIsRequestingPiecesCount ()
+		{
+			return IsRequestingPiecesCount;
+		}
+		
+		bool IPeer.GetIsSeeder ()
+		{
+			return IsSeeder;
+		}
+		
+		bool IPeer.GetIsConnected ()
+		{
+			return IsConnected;
+		}
+		
+		string IPeer.GetPeerId ()
+		{
+			return PeerId;
+		}
+		
+		int IPeer.GetPiecesSent ()
+		{
+			return PiecesSent;
+		}
+		
+		bool IPeer.GetSupportsFastPeer ()
+		{
+			return SupportsFastPeer;
+		}
+		
+		string IPeer.GetUri ()
+		{
+			return Uri;
+		}
+		
+		#endregion 
+		
 	}
 }

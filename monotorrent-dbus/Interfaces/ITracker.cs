@@ -6,41 +6,41 @@ using MonoTorrent.Client;
 namespace MonoTorrent.DBus
 {
 	[Interface ("org.monotorrent.tracker")]
-    interface ITracker : IExportable
-    {
-        event AnnounceHandler AnnounceReceived;
+	interface ITracker : IExportable
+	{
+		event AnnounceHandler AnnounceReceived;
 
-        event ScrapeHandler ScrapeReceived;
+		event ScrapeHandler ScrapeReceived;
 
-        event StateChangedHandler StateChanged;
+		event StateChangedHandler StateChanged;
 
 
 		// True if the announcing is supported
-        bool CanAnnounce { get; }
+		bool GetCanAnnounce ();
 
 		// True if scraping is supported
-        bool CanScrape { get; }
+		bool GetCanScrape ();
 
 		// The number of seeds
-        int Complete { get; }
+		int GetComplete ();
 
 		// The number of time the torrent has been downloaded
-        int Downloaded { get; }
+		int GetDownloaded ();
 
 		// The failure message if the tracker could not be contacted
-        string FailureMessage { get; }
+		string GetFailureMessage ();
 
 		// The number of leeches
-        int Incomplete { get; }
+		int GetIncomplete ();
 
 		// The warning message (if any)
-        string WarningMessage { get; }
+		string GetWarningMessage ();
 
 		
 		// Announce to the tracker
-        void Announce();
+		void Announce();
 
 		// Scrape the tracker
-        void Scrape();
-    }
+		void Scrape();
+	}
 }

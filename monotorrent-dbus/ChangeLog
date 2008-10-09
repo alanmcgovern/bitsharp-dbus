@@ -1,3 +1,28 @@
+2008-10-10  Alan McGovern  <amcgovern@novell.com>
+
+	* Interfaces/IPeer.cs:
+	* monotorrent-dbus.mdp:
+	* Interfaces/IEngine.cs:
+	* Interfaces/ITracker.cs:
+	* Interfaces/ITorrent.cs:
+	* Interfaces/IDownloader.cs:
+	* Interfaces/IExportable.cs:
+	* Interfaces/ITorrentFile.cs:
+	* Implementation/PeerAdapter.cs:
+	* Interfaces/ITorrentService.cs:
+	* Interfaces/IEngineSettings.cs:
+	* Interfaces/ITorrentSettings.cs:
+	* Implementation/EngineAdapter.cs:
+	* Implementation/TorrentService.cs:
+	* Implementation/TrackerAdapter.cs:
+	* Implementation/TorrentAdapter.cs:
+	* Implementation/TorrentFileAdapter.cs:
+	* Implementation/TorrentManagerAdapter.cs:
+	* Implementation/EngineSettingsAdapter.cs:
+	* Implementation/TorrentSettingsAdapter.cs: Don't export properties over
+	dbus, NDesk.DBus has issues with setters. Update the API to support
+	that.
+
 2008-06-11  Alan McGovern <alan.mcgovern@gmail.com> 
 
 	* Implementation/EngineAdapter.cs: Correctly check if a torrent is

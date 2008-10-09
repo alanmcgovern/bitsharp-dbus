@@ -124,5 +124,70 @@ namespace MonoTorrent.DBus
 			foreach (ObjectPath path in files)
 				TorrentService.Bus.Unregister (path);
 		}
+
+		#region ITorrent implementation 
+
+		ObjectPath IExportable.GetPath ()
+		{
+			return Path;
+		}
+		
+		string[][] ITorrent.GetAnnounceUrls ()
+		{
+			return AnnounceUrls;
+		}
+		
+		string ITorrent.GetComment ()
+		{
+			return Comment;
+		}
+		
+		string ITorrent.GetCreatedBy ()
+		{
+			return CreatedBy;
+		}
+		
+		DateTime ITorrent.GetCreationDate ()
+		{
+			return CreationDate;
+		}
+		
+		ObjectPath[] ITorrent.GetFiles ()
+		{
+			return Files;
+		}
+		
+		byte[] ITorrent.GetInfoHash ()
+		{
+			return InfoHash;
+		}
+		
+		bool ITorrent.GetIsPrivate ()
+		{
+			return IsPrivate;
+		}
+		
+		string ITorrent.GetName ()
+		{
+			return Name;
+		}
+		
+		int ITorrent.GetPieceLength ()
+		{
+			return PieceLength;
+		}
+		
+		long ITorrent.GetSize ()
+		{
+			return Size;
+		}
+		
+		string ITorrent.GetTorrentPath ()
+		{
+			return TorrentPath;
+		}
+		
+		#endregion 
+		
 	}
 }

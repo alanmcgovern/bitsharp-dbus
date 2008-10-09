@@ -31,7 +31,7 @@ namespace MonoTorrent.DBus
 	public interface ITorrentService
 	{
 		// Returns the names of all available engines
-		string[] AvailableEngines ();
+		string[] GetAvailableEngines ();
 		
 		// Creates a new engine with the specified name/settings
 		ObjectPath GetEngine (string name);

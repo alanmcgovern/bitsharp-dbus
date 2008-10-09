@@ -118,5 +118,121 @@ namespace MonoTorrent.DBus
 			get { return settings.PreferEncryption; }
 			set { settings.PreferEncryption = true; }
 		}
+
+		
+		#region IEngineSettings implementation 
+
+		ObjectPath IExportable.GetPath ()
+		{
+			return Path;
+		}
+		
+		EncryptionTypes IEngineSettings.GetAllowedEncryption ()
+		{
+			return AllowedEncryption;
+		}
+		
+		bool IEngineSettings.GetHaveSupressionEnabled ()
+		{
+			return HaveSupressionEnabled;
+		}
+		
+		void IEngineSettings.SetHaveSupressionEnabled (bool haveSuppression)
+		{
+			HaveSupressionEnabled = haveSuppression;
+		}
+		
+		int IEngineSettings.GetGlobalMaxConnections ()
+		{
+			return GlobalMaxConnections;
+		}
+		
+		void IEngineSettings.SetGlobalMaxConnections (int maxConnections)
+		{
+			GlobalMaxConnections = maxConnections;
+		}
+		
+		int IEngineSettings.GetGlobalMaxHalfOpenConnections ()
+		{
+			return GlobalMaxHalfOpenConnections;
+		}
+		
+		void IEngineSettings.SetGlobalMaxHalfOpenConnections (int halfOpens)
+		{
+			GlobalMaxHalfOpenConnections = halfOpens;
+		}
+		
+		int IEngineSettings.GetGlobalMaxDownloadSpeed ()
+		{
+			return GlobalMaxDownloadSpeed;
+		}
+		
+		void IEngineSettings.SetGlobalMaxDownloadSpeed (int maxDownload)
+		{
+			GlobalMaxDownloadSpeed = maxDownload;
+		}
+		
+		int IEngineSettings.GetGlobalMaxUploadSpeed ()
+		{
+			return GlobalMaxUploadSpeed;
+		}
+		
+		void IEngineSettings.SetGlobalMaxUploadSpeed (int maxUpload)
+		{
+			GlobalMaxUploadSpeed = maxUpload;
+		}
+		
+		int IEngineSettings.GetListenPort ()
+		{
+			return ListenPort;
+		}
+		
+		void IEngineSettings.SetListenPort (int listenPort)
+		{
+			ListenPort = listenPort;
+		}
+		
+		int IEngineSettings.GetMaxOpenFiles ()
+		{
+			return MaxOpenFiles;
+		}
+		
+		void IEngineSettings.SetMaxOpenFiles (int maxOpenFiles)
+		{
+			MaxOpenFiles = maxOpenFiles;
+		}
+		
+		int IEngineSettings.GetMaxReadRate ()
+		{
+			return MaxReadRate;
+		}
+		
+		void IEngineSettings.SetMaxReadRate (int maxReadRate)
+		{
+			MaxReadRate = maxReadRate;
+		}
+		
+		int IEngineSettings.GetMaxWriteRate ()
+		{
+			return MaxWriteRate;
+		}
+		
+		void IEngineSettings.SetMaxWriteRate (int maxWriteRate)
+		{
+			MaxWriteRate = maxWriteRate;
+		}
+		
+		bool IEngineSettings.GetPreferEncryption ()
+		{
+			return PreferEncryption;
+		}
+		
+		void IEngineSettings.SetPreferEncryption (bool preferEncryption)
+		{
+			PreferEncryption = preferEncryption;
+		}
+		
+		#endregion 
+		
 	}
 }

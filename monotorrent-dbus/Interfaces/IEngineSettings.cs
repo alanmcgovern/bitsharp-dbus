@@ -31,26 +31,36 @@ namespace MonoTorrent.DBus
 	[Interface ("org.monotorrent.enginesettings")]
 	public interface IEngineSettings : IExportable
 	{
-        EncryptionTypes AllowedEncryption { get; set; }
+		EncryptionTypes GetAllowedEncryption ();
 				
-        bool HaveSupressionEnabled { get; set; }
+		bool GetHaveSupressionEnabled ();
+		void SetHaveSupressionEnabled (bool haveSuppression);
 
-        int GlobalMaxConnections { get; set; }
+		int GetGlobalMaxConnections ();
+		void SetGlobalMaxConnections (int maxConnections);
 
-        int GlobalMaxHalfOpenConnections { get; set; }
+		int GetGlobalMaxHalfOpenConnections ();
+		void SetGlobalMaxHalfOpenConnections (int halfOpens);
 
-        int GlobalMaxDownloadSpeed { get; set; }
+		int GetGlobalMaxDownloadSpeed ();
+		void SetGlobalMaxDownloadSpeed (int maxDownload);
 
-        int GlobalMaxUploadSpeed { get; set; }
+		int GetGlobalMaxUploadSpeed ();
+		void SetGlobalMaxUploadSpeed (int maxUpload);
 
-        int ListenPort { get; set; }
+		int GetListenPort ();
+		void SetListenPort (int listenPort);
 
-        int MaxOpenFiles { get; set; }
+		int GetMaxOpenFiles ();
+		void SetMaxOpenFiles (int maxOpenFiles);
 
-        int MaxReadRate { get; set; }
+		int GetMaxReadRate ();
+		void SetMaxReadRate (int maxReadRate);
 
-        int MaxWriteRate { get; set; }
+		int GetMaxWriteRate ();
+		void SetMaxWriteRate (int maxWriteRate);
 		
-        bool PreferEncryption { get; set; }
+		bool GetPreferEncryption ();
+		void SetPreferEncryption (bool preferEncryption);
 	}
 }

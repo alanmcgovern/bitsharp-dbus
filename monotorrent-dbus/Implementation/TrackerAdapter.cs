@@ -95,5 +95,60 @@ namespace MonoTorrent.DBus
 		{
 			manager.TrackerManager.Scrape (tracker);
 		}
+
+		#region ITracker implementation
+
+		ObjectPath IExportable.GetPath ()
+		{
+			return Path;
+		}
+		
+		bool ITracker.GetCanAnnounce ()
+		{
+			return CanAnnounce;
+		}
+		
+		bool ITracker.GetCanScrape ()
+		{
+			return CanScrape;
+		}
+		
+		int ITracker.GetComplete ()
+		{
+			return Complete;
+		}
+		
+		int ITracker.GetDownloaded ()
+		{
+			return Downloaded;
+		}
+		
+		string ITracker.GetFailureMessage ()
+		{
+			return FailureMessage;
+		}
+		
+		int ITracker.GetIncomplete ()
+		{
+			return Incomplete;
+		}
+		
+		string ITracker.GetWarningMessage ()
+		{
+			return WarningMessage;
+		}
+		
+		void ITracker.Announce ()
+		{
+			Announce ();
+		}
+		
+		void ITracker.Scrape ()
+		{
+			Scrape ();
+		}
+		
+		#endregion 
+		
 	}
 }

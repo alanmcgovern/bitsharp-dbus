@@ -68,6 +68,67 @@ namespace MonoTorrent.DBus
 			get { return settings.UploadSlots; }
 			set { settings.UploadSlots = value; }
 		}
+
+		
+		#region ITorrentSettings implementation 
+
+		ObjectPath IExportable.GetPath ()
+		{
+			return Path;
+		}
+		
+		bool ITorrentSettings.GetInitialSeedingEnabled ()
+		{
+			return InitialSeedingEnabled;
+		}
+		
+		void ITorrentSettings.SetInitialSeedingEnabled (bool initialSeeding)
+		{
+			InitialSeedingEnabled = initialSeeding;
+		}
+		
+		int ITorrentSettings.GetMaxDownloadSpeed ()
+		{
+			return MaxDownloadSpeed;
+		}
+		
+		void ITorrentSettings.SetMaxDownloadSpeed (int maxSpeed)
+		{
+			MaxDownloadSpeed = maxSpeed;
+		}
+		
+		int ITorrentSettings.GetMaxUploadSpeed ()
+		{
+			return MaxUploadSpeed;
+		}
+		
+		void ITorrentSettings.SetMaxUploadSpeed (int maxSpeed)
+		{
+			MaxUploadSpeed = maxSpeed;
+		}
+		
+		int ITorrentSettings.GetMaxConnections ()
+		{
+			return MaxConnections;
+		}
+		
+		void ITorrentSettings.SetMaxConnections (int maxConnections)
+		{
+			MaxConnections = maxConnections;
+		}
+		
+		int ITorrentSettings.GetUploadSlots ()
+		{
+			return UploadSlots;
+		}
+		
+		void ITorrentSettings.SetUploadSlots (int slots)
+		{
+			UploadSlots = slots;
+		}
+		
+		#endregion 
+		
 		
 		public TorrentSettingsAdapter (TorrentSettings settings, ObjectPath path)
 		{

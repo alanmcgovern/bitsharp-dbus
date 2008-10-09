@@ -9,29 +9,29 @@ namespace MonoTorrent.DBus
 	public delegate void StatsUpdateHandler();
 	
 	[Interface ("org.monotorrent.engine")]
-    public interface IEngine : IExportable
-    {
+	public interface IEngine : IExportable
+	{
 		event StatsUpdateHandler StatsUpdate;
 		
 		// The name the engine is identified by
-		string Name { get; }
+		string GetName ();
 
 		// The settings associated with the engine
-        ObjectPath Settings { get; }
+		ObjectPath GetSettings ();
 
 		// The combined download speed of all active downloaders
-        int TotalDownloadSpeed { get; }
+		int GetTotalDownloadSpeed ();
 
 		// The combined upload speed of all active downloaders
-        int TotalUploadSpeed { get; }
+		int GetTotalUploadSpeed ();
 		
-        // Returns all downloaders
+		// Returns all downloaders
 		ObjectPath[] GetDownloaders ();
-        
+		
 		// Parses an ITorrent from a .torrent file
 		ObjectPath RegisterTorrent (string torrentPath, string savePath);
-        
-        // Removes the IDownloader from the engine
+		
+		// Removes the IDownloader from the engine
 		void UnregisterTorrent (ObjectPath downloader);
-    }
+	}
 }

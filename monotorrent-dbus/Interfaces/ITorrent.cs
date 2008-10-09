@@ -32,26 +32,27 @@ namespace MonoTorrent.DBus
 	{
 		// This represents all the trackers in their tiers. There are N rows of
 		// tiers each of which contains M tracker urls
-        string[][] AnnounceUrls { get; }
+		string[][] GetAnnounceUrls ();
 		
-        string Comment { get; }
+		string GetComment ();
 		
-        string CreatedBy { get; }
+		string GetCreatedBy ();
+
+		// FIXME: Pass ticks since unix time?
+		DateTime GetCreationDate ();
 		
-        DateTime CreationDate { get; }
+		ObjectPath[] GetFiles ();
 		
-        ObjectPath[] Files { get; }
+		byte[] GetInfoHash ();
 		
-        byte[] InfoHash { get; }
+		bool GetIsPrivate ();
 		
-        bool IsPrivate { get; }
+		string GetName ();
 		
-        string Name { get; }
+		int GetPieceLength ();
 		
-        int PieceLength { get; }
+		long GetSize ();
 		
-        long Size { get; }
-		
-        string TorrentPath { get; }
+		string GetTorrentPath ();
 	}
 }
