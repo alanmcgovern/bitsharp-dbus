@@ -1,0 +1,6 @@
+Name: monotorrent-dbus
+Description: monotorrent-dbus
+Version: 
+
+Requires: 
+Libs: -r:@expanded_libdir@/@PACKAGE@/monotorrent-dbus.dll

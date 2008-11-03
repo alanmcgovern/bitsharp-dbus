@@ -15,11 +15,9 @@
   </Configurations>
   <Contents>
     <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="Interfaces" subtype="Directory" buildaction="Compile" />
     <File name="Interfaces/IEngine.cs" subtype="Code" buildaction="Compile" />
     <File name="Interfaces/ITracker.cs" subtype="Code" buildaction="Compile" />
     <File name="Interfaces/IDownloader.cs" subtype="Code" buildaction="Compile" />
-    <File name="Implementation" subtype="Directory" buildaction="Compile" />
     <File name="Implementation/EngineAdapter.cs" subtype="Code" buildaction="Compile" />
     <File name="Implementation/TorrentManagerAdapter.cs" subtype="Code" buildaction="Compile" />
     <File name="Implementation/TrackerAdapter.cs" subtype="Code" buildaction="Compile" />
@@ -39,7 +37,6 @@
     <File name="TorrentData.cs" subtype="Code" buildaction="Compile" />
     <File name="Interfaces/IPeer.cs" subtype="Code" buildaction="Compile" />
     <File name="Implementation/PeerAdapter.cs" subtype="Code" buildaction="Compile" />
-    <File name="EnumAdapters" subtype="Directory" buildaction="Compile" />
     <File name="EnumAdapters/TorrentState.cs" subtype="Code" buildaction="Compile" />
     <File name="EnumAdapters/Priority.cs" subtype="Code" buildaction="Compile" />
     <File name="EnumAdapters/EncryptionTypes.cs" subtype="Code" buildaction="Compile" />
@@ -52,10 +49,10 @@
     <ProjectReference type="Assembly" localcopy="True" refto="../../bitsharp-0.50/src/MonoTorrent/bin/Debug/MonoTorrent.dll" />
   </References>
   <GtkDesignInfo />
-  <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" IsAutotoolsProject="True" RelativeConfigureInPath="..">
+  <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am" RelativeConfigureInPath="..">
     <BuildFilesVar Sync="True" Name="FILES" />
     <DeployFilesVar />
-    <ResourcesVar Sync="True" Name="RESOURCES" />
+    <ResourcesVar Name="RESOURCES" />
     <OthersVar />
     <GacRefVar Name="REFERENCES" />
     <AsmRefVar Name="REFERENCES" />
