@@ -1,5 +1,5 @@
 
-EXTRA_DIST =  
+EXTRA_DIST = $(dbusservice_in_files)
 
 # Warning: This is an automatically generated file, do not edit!
 
@@ -102,6 +102,11 @@ MONOTORRENT_DLL = $(BUILD_DIR)/MonoTorrent.dll
 $(eval $(call emit-deploy-wrapper,MONOTORRENT_DBUS,monotorrent-dbus,x))
 $(eval $(call emit-deploy-target,MONOTORRENT_DLL))
 
+dbusservice_in_files = \
+	data/org.monotorrent.dbus.service.in
+
+dbusservicedir = $(datadir)/dbus-1/services
+dbusservice_DATA = $(dbusservice_in_files:.service.in=.service)
 
 $(eval $(call emit_resgen_targets))
 $(build_xamlg_list): %.xaml.g.cs: %.xaml

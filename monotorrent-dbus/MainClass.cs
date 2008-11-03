@@ -31,7 +31,7 @@ namespace MonoTorrent.DBus
 	
 	public class MainClass
 	{
-		static string BusName = "org.monotorrent.dbus";
+		static string BusName = "org.monotorrent.dbusservice";
 		static ObjectPath ServicePath = new ObjectPath ("/org/monotorrent/service");
 		static Bus bus;
 		static TorrentService service;

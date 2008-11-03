@@ -54,7 +54,7 @@ AC_CONFIG_FILES([
 Makefile
 monotorrent-dbus/monotorrent-dbus
 monotorrent-dbus/Makefile
-
+monotorrent-dbus/data/org.monotorrent.dbus.service
 ])
 
 AC_OUTPUT
