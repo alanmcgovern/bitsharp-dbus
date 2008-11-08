@@ -11,7 +11,7 @@ using org.freedesktop.DBus;
 namespace MonoTorrent.DBus
 {
 	[Interface ("org.monotorrent.peer")]
-	public interface IPeer : IExportable
+	public interface IPeer
 	{
 		bool GetAmChoking ();
 		bool GetAmInterested ();

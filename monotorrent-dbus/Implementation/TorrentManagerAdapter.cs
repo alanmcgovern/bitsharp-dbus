@@ -42,12 +42,10 @@ namespace MonoTorrent.DBus
 		
 		private ObjectPath path;
 		private TorrentManager manager;
-		private List<PeerAdapter> peers;
 		private TorrentSettingsAdapter settingsAdapter;
 		private TorrentAdapter torrent;
 		private ObjectPath[][] trackers;
 		private int trackerNumber;
-		private int peerNumber;
 		
 		public TorrentManagerAdapter (TorrentManager manager, TorrentAdapter torrent, TorrentSettingsAdapter settings, ObjectPath path)
 		{
@@ -55,15 +53,12 @@ namespace MonoTorrent.DBus
 			this.torrent = torrent;
 			this.settingsAdapter = settings;
 			this.path = path;
-			this.peers = new List<PeerAdapter>();
 			
 			manager.TorrentStateChanged += delegate (object sender, TorrentStateChangedEventArgs e) {
 				if (StateChanged != null)
 					StateChanged (path, EnumAdapter.Adapt(e.OldState), EnumAdapter.Adapt (e.NewState));
 			};
 
-			manager.PeerConnected += AddPeer;
-			manager.PeerDisconnected += RemovePeer;
 			manager.PieceHashed += OnPieceHashed;
 			
 			LoadTrackers (manager.TrackerManager.TrackerTiers);
@@ -177,10 +172,9 @@ namespace MonoTorrent.DBus
 			// FIXME: Support this
 		}
 
-		public ObjectPath[] GetPeers ()
+		public IPeer[] GetPeers ()
 		{
-			lock (peers)
-				return peers.ConvertAll<ObjectPath>( delegate (PeerAdapter p) { return p.Path;  }).ToArray();
+			return PeerAdapter.Adapt (manager.GetPeers());
 		}
 
 		public void RemoveTracker (ObjectPath path)
@@ -188,38 +182,6 @@ namespace MonoTorrent.DBus
 			// FIXME: Support this
 		}
 		
-		private void AddPeer (object sender, PeerConnectionEventArgs e)
-		{
-			ObjectPath path = new ObjectPath(string.Format("{0}/peers/{1}", Path.ToString(), peerNumber++));
-			PeerAdapter d = new PeerAdapter(e.PeerID, path);
-			TorrentService.Bus.Register (path, d);
-			lock (peers)
-				peers.Add(d);
-			
-			PeerHandler h = PeerConnected;
-			if (h != null)
-				h (Path, path);
-		}
-		
-		public void RemovePeer(object sender, PeerConnectionEventArgs e)
-		{
-			lock (peers)
-			{
-				foreach (PeerAdapter p in peers)
-				{
-					if (p.Id != e.PeerID)
-						continue;
-					
-					peers.Remove(p);
-
-					PeerHandler h = PeerDisconnected;
-					if (h != null)
-						h (Path, p.Path);
-					break;
-				}
-			}
-		}
-
 		private void OnPieceHashed (object sender, PieceHashedEventArgs e)
 		{
 			float progress = EnumAdapter.Adapt(manager.State) == TorrentState.Hashing ? (float)e.PieceIndex / manager.Bitfield.Length : 1;
@@ -275,7 +237,7 @@ namespace MonoTorrent.DBus
 			return UploadSpeed;
 		}
 		
-		ObjectPath[] IDownloader.GetPeers ()
+		IPeer[] IDownloader.GetPeers ()
 		{
 			return GetPeers ();
 		}

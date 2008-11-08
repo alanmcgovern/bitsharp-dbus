@@ -9,18 +9,17 @@ using MonoTorrent.Client;
 using MonoTorrent.Client.Encryption;
 
 using NDesk.DBus;
+using System.Collections.Generic;
 
 namespace MonoTorrent.DBus
 {
-	public class PeerAdapter : IPeer
+	public struct PeerAdapter : IPeer
 	{
-		private ObjectPath path;
 		private PeerId id;
 		
-		public PeerAdapter(PeerId id, ObjectPath path)
+		public PeerAdapter(PeerId id)
 		{
 			this.id = id;
-			this.path = path;
 		}
 		
 		public bool AmChoking {
@@ -74,10 +73,6 @@ namespace MonoTorrent.DBus
 			get { return id.IsConnected; }
 		}
 		
-		public ObjectPath Path {
-			get { return path; }
-		}
-
 		public string PeerId {
 			get { return id.PeerID; }
 		}
@@ -96,11 +91,6 @@ namespace MonoTorrent.DBus
 
 		
 		#region IPeer implementation 
-
-		ObjectPath IExportable.GetPath ()
-		{
-			return Path;
-		}
 		
 		bool IPeer.GetAmChoking ()
 		{
@@ -174,5 +164,12 @@ namespace MonoTorrent.DBus
 		
 		#endregion 
 		
+
+		internal static IPeer[] Adapt(List<PeerId> list)
+		{
+			return list.ConvertAll<IPeer>(delegate(PeerId p) {
+				return new PeerAdapter(p);
+			}).ToArray();
+		}
 	}
 }

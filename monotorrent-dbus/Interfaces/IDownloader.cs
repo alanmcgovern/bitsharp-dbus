@@ -40,7 +40,7 @@ namespace MonoTorrent.DBus
 
 		//void AddTracker (string uri);
 		
-		ObjectPath[] GetPeers ();
+		IPeer[] GetPeers ();
 	
 		void HashCheck(bool autoStart);
 		
