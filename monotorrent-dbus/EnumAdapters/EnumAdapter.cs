@@ -8,7 +8,7 @@ using System;
 
 namespace MonoTorrent.DBus
 {
-	public static class EnumAdapter
+	internal static class EnumAdapter
 	{
 				
 		public static TorrentState Adapt (MonoTorrent.Common.TorrentState state)
