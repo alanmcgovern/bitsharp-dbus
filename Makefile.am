@@ -1,6 +1,6 @@
 
-EXTRA_DIST =  expansions.m4 
+EXTRA_DIST =  expansions.m4 monotorrent-dbus/libs/MonoTorrent.dll
 SUBDIRS =  monotorrent-dbus monotorrent-dbus-server
 
 run:
-	mono monotorrent-dbus/bin/Release/monotorrent-dbus.exe
+	mono monotorrent-dbus-server/bin/Release/monotorrent-dbus-server.exe

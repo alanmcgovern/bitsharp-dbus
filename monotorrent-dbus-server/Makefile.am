@@ -13,6 +13,7 @@ PROJECT_REFERENCES =  \
 	../monotorrent-dbus/bin/Debug/monotorrent-dbus.dll
 BUILD_DIR = bin/Debug
 
+MONOTORRENT_DLL_SOURCE=./libs/MonoTorrent.dll
 MONOTORRENT_DBUS_DLL_SOURCE=../monotorrent-dbus/bin/Debug/monotorrent-dbus.dll
 MONOTORRENT_DBUS_SERVER_EXE_MDB_SOURCE=bin/Debug/monotorrent-dbus-server.exe.mdb
 MONOTORRENT_DBUS_SERVER_EXE_MDB=$(BUILD_DIR)/monotorrent-dbus-server.exe.mdb
@@ -29,6 +30,7 @@ PROJECT_REFERENCES =  \
 	../monotorrent-dbus/bin/Release/monotorrent-dbus.dll
 BUILD_DIR = bin/Release
 
+MONOTORRENT_DLL_SOURCE=./libs/MonoTorrent.dll
 MONOTORRENT_DBUS_DLL_SOURCE=../monotorrent-dbus/bin/Release/monotorrent-dbus.dll
 MONOTORRENT_DBUS_SERVER_EXE_MDB=
 
@@ -38,6 +40,7 @@ AL=al2
 SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
+	$(MONOTORRENT_DLL) \
 	$(MONOTORRENT_DBUS_DLL) \
 	$(MONOTORRENT_DBUS_SERVER_EXE_MDB)  
 
@@ -47,13 +50,17 @@ BINARIES = \
 
 RESGEN=resgen2
 	
-all: $(ASSEMBLY) $(PROGRAMFILES) $(BINARIES) 
+all: ./libs/MonoTorrent.dll $(ASSEMBLY) $(PROGRAMFILES) $(BINARIES) 
 
-FILES =  \
+./libs/MonoTorrent.dll:
+	mkdir -p libs
+	cp `pkg-config --variable=Libraries monotorrent` libs/MonoTorrent.dll
+
+FILES = \
+	Main.cs \
 	AssemblyInfo.cs \
 	Implementation/EngineAdapter.cs \
 	Implementation/EngineSettingsAdapter.cs \
-	Implementation/EnumAdapter.cs \
 	Implementation/PeerAdapter.cs \
 	Implementation/TorrentAdapter.cs \
 	Implementation/TorrentFileAdapter.cs \
@@ -61,8 +68,7 @@ FILES =  \
 	Implementation/TorrentService.cs \
 	Implementation/TorrentSettingsAdapter.cs \
 	Implementation/TrackerAdapter.cs \
-	Main.cs \
-	MainClass.cs \
+	Implementation/EnumAdapter.cs \
 	TorrentData.cs 
 
 DATA_FILES = 
@@ -73,20 +79,23 @@ EXTRAS = \
 	monotorrent-dbus-server.in 
 
 REFERENCES =  \
-	../monotorrent-dbus/bin/Debug/monotorrent-dbus.dll \
-	-pkg:ndesk-dbus-1.0 \
-	System
+	System \
+	$(NDESK_DBUS_10_LIBS) \
+	System.Xml
 
-DLL_REFERENCES = 
+DLL_REFERENCES =  \
+	./libs/MonoTorrent.dll
 
-CLEANFILES = $(PROGRAMFILES) $(BINARIES) 
+CLEANFILES = $(PROGRAMFILES) $(BINARIES) ./libs/MonoTorrent.dll
 
 include $(top_srcdir)/Makefile.include
 
 MONOTORRENT_DBUS_SERVER = $(BUILD_DIR)/monotorrent-dbus-server
+MONOTORRENT_DLL = $(BUILD_DIR)/MonoTorrent.dll
 MONOTORRENT_DBUS_DLL = $(BUILD_DIR)/monotorrent-dbus.dll
 
 $(eval $(call emit-deploy-wrapper,MONOTORRENT_DBUS_SERVER,monotorrent-dbus-server,x))
+$(eval $(call emit-deploy-target,MONOTORRENT_DLL))
 $(eval $(call emit-deploy-target,MONOTORRENT_DBUS_DLL))
 
 

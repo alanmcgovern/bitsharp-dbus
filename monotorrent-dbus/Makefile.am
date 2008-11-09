@@ -1,5 +1,5 @@
 
-EXTRA_DIST = ./libs/MonoTorrent.dll 
+EXTRA_DIST =  
 
 # Warning: This is an automatically generated file, do not edit!
 
@@ -14,7 +14,6 @@ BUILD_DIR = bin/Debug
 
 MONOTORRENT_DBUS_DLL_MDB_SOURCE=bin/Debug/monotorrent-dbus.dll.mdb
 MONOTORRENT_DBUS_DLL_MDB=$(BUILD_DIR)/monotorrent-dbus.dll.mdb
-MONOTORRENT_DLL_SOURCE=./libs/MonoTorrent.dll
 
 endif
 
@@ -28,7 +27,6 @@ PROJECT_REFERENCES =
 BUILD_DIR = bin/Release
 
 MONOTORRENT_DBUS_DLL_MDB=
-MONOTORRENT_DLL_SOURCE=./libs/MonoTorrent.dll
 
 endif
 
@@ -36,8 +34,7 @@ AL=al2
 SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
-	$(MONOTORRENT_DBUS_DLL_MDB) \
-	$(MONOTORRENT_DLL)  
+	$(MONOTORRENT_DBUS_DLL_MDB)  
 
 LINUX_PKGCONFIG = \
 	$(MONOTORRENT_DBUS_PC)  
@@ -45,30 +42,24 @@ LINUX_PKGCONFIG = \
 
 RESGEN=resgen2
 	
-all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG)  
+all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
-./libs/MonoTorrent.dll:
-	mkdir -p libs
-	cp `pkg-config --variable=Libraries monotorrent` libs/MonoTorrent.dll
-
-FILES =  \
+FILES = \
 	AssemblyInfo.cs \
-	EnumAdapters/EncryptionTypes.cs \
-	EnumAdapters/Priority.cs \
-	EnumAdapters/TorrentState.cs \
-	Interfaces/IDownloader.cs \
 	Interfaces/IEngine.cs \
-	Interfaces/IEngineSettings.cs \
-	Interfaces/IExportable.cs \
-	Interfaces/IPeer.cs \
-	Interfaces/ITorrent.cs \
-	Interfaces/ITorrentFile.cs \
-	Interfaces/ITorrentService.cs \
-	Interfaces/ITorrentSettings.cs \
 	Interfaces/ITracker.cs \
-	MainClass.cs \
+	Interfaces/IDownloader.cs \
+	Interfaces/IEngineSettings.cs \
+	Interfaces/ITorrentSettings.cs \
+	Interfaces/ITorrentFile.cs \
+	Interfaces/ITorrent.cs \
+	Interfaces/ITorrentService.cs \
+	Interfaces/IExportable.cs \
 	ObjectPathComparer.cs \
-	TorrentData.cs 
+	Interfaces/IPeer.cs \
+	EnumAdapters/TorrentState.cs \
+	EnumAdapters/Priority.cs \
+	EnumAdapters/EncryptionTypes.cs 
 
 DATA_FILES = 
 
@@ -80,21 +71,17 @@ EXTRAS = \
 
 REFERENCES =  \
 	System \
-	$(NDESK_DBUS_10_LIBS) \
-	System.Xml
+	$(NDESK_DBUS_10_LIBS)
 
-DLL_REFERENCES =  \
-	./libs/MonoTorrent.dll
+DLL_REFERENCES = 
 
 CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
 include $(top_srcdir)/Makefile.include
 
 MONOTORRENT_DBUS_PC = $(BUILD_DIR)/monotorrent-dbus.pc
-MONOTORRENT_DLL = $(BUILD_DIR)/MonoTorrent.dll
 
 $(eval $(call emit-deploy-wrapper,MONOTORRENT_DBUS_PC,monotorrent-dbus.pc))
-$(eval $(call emit-deploy-target,MONOTORRENT_DLL))
 
 dbusservice_in_files = \
 	data/org.monotorrent.dbus.service.in
