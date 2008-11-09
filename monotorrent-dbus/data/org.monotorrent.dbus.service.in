@@ -1,4 +1,4 @@
 [D-BUS Service]
-Name=org.monotorrent.dbusservice
-Exec=@expanded_bindir@/monotorrent-dbus
+Name=org.monotorrent.dbus
+Exec=@expanded_bindir@/monotorrent-dbus-server
 
