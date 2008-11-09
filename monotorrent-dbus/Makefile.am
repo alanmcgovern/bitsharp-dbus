@@ -83,12 +83,6 @@ MONOTORRENT_DBUS_PC = $(BUILD_DIR)/monotorrent-dbus.pc
 
 $(eval $(call emit-deploy-wrapper,MONOTORRENT_DBUS_PC,monotorrent-dbus.pc))
 
-dbusservice_in_files = \
-	data/org.monotorrent.dbus.service.in
- 
-dbusservicedir = $(datadir)/dbus-1/services
-dbusservice_DATA = $(dbusservice_in_files:.service.in=.service)
-
 $(eval $(call emit_resgen_targets))
 $(build_xamlg_list): %.xaml.g.cs: %.xaml
 	xamlg '$<'

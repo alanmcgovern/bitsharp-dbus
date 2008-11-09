@@ -56,7 +56,7 @@ Makefile
 monotorrent-dbus-server/monotorrent-dbus-server
 monotorrent-dbus-server/Makefile
 monotorrent-dbus/Makefile
-monotorrent-dbus/data/org.monotorrent.dbus.service
+monotorrent-dbus-server/data/org.monotorrent.dbus.service
 
 ])
 
