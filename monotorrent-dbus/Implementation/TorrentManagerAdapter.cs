@@ -174,9 +174,9 @@ namespace MonoTorrent.DBus
 
 		public IPeer[] GetPeers ()
 		{
-			return PeerAdapter.Adapt (manager.GetPeers());
+			return new IPeer[0];// PeerAdapter.Adapt (manager.GetPeers());
 		}
-
+ 
 		public void RemoveTracker (ObjectPath path)
 		{
 			// FIXME: Support this
