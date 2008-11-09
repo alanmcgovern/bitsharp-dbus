@@ -1,5 +1,5 @@
 
-EXTRA_DIST = libs/MonoTorrent.dll 
+EXTRA_DIST = ./libs/MonoTorrent.dll 
 
 # Warning: This is an automatically generated file, do not edit!
 
@@ -14,7 +14,7 @@ BUILD_DIR = bin/Debug
 
 MONOTORRENT_DBUS_DLL_MDB_SOURCE=bin/Debug/monotorrent-dbus.dll.mdb
 MONOTORRENT_DBUS_DLL_MDB=$(BUILD_DIR)/monotorrent-dbus.dll.mdb
-MONOTORRENT_DLL_SOURCE=libs/MonoTorrent.dll
+MONOTORRENT_DLL_SOURCE=./libs/MonoTorrent.dll
 
 endif
 
@@ -28,7 +28,7 @@ PROJECT_REFERENCES =
 BUILD_DIR = bin/Release
 
 MONOTORRENT_DBUS_DLL_MDB=
-MONOTORRENT_DLL_SOURCE=libs/MonoTorrent.dll
+MONOTORRENT_DLL_SOURCE=./libs/MonoTorrent.dll
 
 endif
 
@@ -47,7 +47,7 @@ RESGEN=resgen2
 	
 all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG)  
 
-libs/MonoTorrent.dll:
+./libs/MonoTorrent.dll:
 	mkdir -p libs
 	cp `pkg-config --variable=Libraries monotorrent` libs/MonoTorrent.dll
 
@@ -94,7 +94,7 @@ REFERENCES =  \
 	System.Xml
 
 DLL_REFERENCES =  \
-	libs/MonoTorrent.dll
+	./libs/MonoTorrent.dll
 
 CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
