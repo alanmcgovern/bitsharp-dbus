@@ -24,7 +24,6 @@
 
 using System;
 using NDesk.DBus;
-using MonoTorrent.Client.Encryption;
 
 namespace MonoTorrent.DBus
 {

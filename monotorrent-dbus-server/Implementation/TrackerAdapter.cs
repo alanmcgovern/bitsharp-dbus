@@ -28,11 +28,7 @@ using MonoTorrent.Client;
 using NDesk.DBus;
 
 namespace MonoTorrent.DBus
-{
-	public delegate void AnnounceHandler (AnnounceResponseEventArgs e);
-	public delegate void ScrapeHandler (ScrapeResponseEventArgs e);
-	public delegate void StateChangedHandler (TrackerStateChangedEventArgs e);
-	
+{	
 	internal class TrackerAdapter : ITracker
 	{
 		public event AnnounceHandler AnnounceReceived;

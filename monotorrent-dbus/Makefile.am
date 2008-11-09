@@ -51,34 +51,24 @@ all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG)
 	mkdir -p libs
 	cp `pkg-config --variable=Libraries monotorrent` libs/MonoTorrent.dll
 
-FILES = \
+FILES =  \
 	AssemblyInfo.cs \
-	Interfaces/IEngine.cs \
-	Interfaces/ITracker.cs \
-	Interfaces/IDownloader.cs \
-	Implementation/EngineAdapter.cs \
-	Implementation/TorrentManagerAdapter.cs \
-	Implementation/TrackerAdapter.cs \
-	Interfaces/IEngineSettings.cs \
-	Implementation/EngineSettingsAdapter.cs \
-	Interfaces/ITorrentSettings.cs \
-	Implementation/TorrentSettingsAdapter.cs \
-	Interfaces/ITorrentFile.cs \
-	Implementation/TorrentFileAdapter.cs \
-	Interfaces/ITorrent.cs \
-	Implementation/TorrentAdapter.cs \
-	Interfaces/ITorrentService.cs \
-	Implementation/TorrentService.cs \
-	Interfaces/IExportable.cs \
-	ObjectPathComparer.cs \
-	TorrentData.cs \
-	Interfaces/IPeer.cs \
-	Implementation/PeerAdapter.cs \
-	EnumAdapters/TorrentState.cs \
-	EnumAdapters/Priority.cs \
 	EnumAdapters/EncryptionTypes.cs \
-	EnumAdapters/EnumAdapter.cs \
-	MainClass.cs 
+	EnumAdapters/Priority.cs \
+	EnumAdapters/TorrentState.cs \
+	Interfaces/IDownloader.cs \
+	Interfaces/IEngine.cs \
+	Interfaces/IEngineSettings.cs \
+	Interfaces/IExportable.cs \
+	Interfaces/IPeer.cs \
+	Interfaces/ITorrent.cs \
+	Interfaces/ITorrentFile.cs \
+	Interfaces/ITorrentService.cs \
+	Interfaces/ITorrentSettings.cs \
+	Interfaces/ITracker.cs \
+	MainClass.cs \
+	ObjectPathComparer.cs \
+	TorrentData.cs 
 
 DATA_FILES = 
 

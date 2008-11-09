@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MonoTorrent.Client;
-using MonoTorrent.Common;
 using NDesk.DBus;
 
 namespace MonoTorrent.DBus

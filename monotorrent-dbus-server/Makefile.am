@@ -49,9 +49,21 @@ RESGEN=resgen2
 	
 all: $(ASSEMBLY) $(PROGRAMFILES) $(BINARIES) 
 
-FILES = \
+FILES =  \
+	AssemblyInfo.cs \
+	Implementation/EngineAdapter.cs \
+	Implementation/EngineSettingsAdapter.cs \
+	Implementation/EnumAdapter.cs \
+	Implementation/PeerAdapter.cs \
+	Implementation/TorrentAdapter.cs \
+	Implementation/TorrentFileAdapter.cs \
+	Implementation/TorrentManagerAdapter.cs \
+	Implementation/TorrentService.cs \
+	Implementation/TorrentSettingsAdapter.cs \
+	Implementation/TrackerAdapter.cs \
 	Main.cs \
-	AssemblyInfo.cs 
+	MainClass.cs \
+	TorrentData.cs 
 
 DATA_FILES = 
 
@@ -61,8 +73,9 @@ EXTRAS = \
 	monotorrent-dbus-server.in 
 
 REFERENCES =  \
-	System \
-	$(NDESK_DBUS_10_LIBS)
+	../monotorrent-dbus/bin/Debug/monotorrent-dbus.dll \
+	-pkg:ndesk-dbus-1.0 \
+	System
 
 DLL_REFERENCES = 
 

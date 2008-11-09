@@ -1,12 +1,14 @@
 using System;
 using NDesk.DBus;
-using MonoTorrent.Client.Tracker;
-using MonoTorrent.Client;
 
 namespace MonoTorrent.DBus
 {
+	public delegate void AnnounceHandler ();
+	public delegate void ScrapeHandler ();
+	public delegate void StateChangedHandler ();
+	
 	[Interface ("org.monotorrent.tracker")]
-	interface ITracker : IExportable
+	public interface ITracker : IExportable
 	{
 		event AnnounceHandler AnnounceReceived;
 

@@ -18,39 +18,25 @@
     <File name="Interfaces/IEngine.cs" subtype="Code" buildaction="Compile" />
     <File name="Interfaces/ITracker.cs" subtype="Code" buildaction="Compile" />
     <File name="Interfaces/IDownloader.cs" subtype="Code" buildaction="Compile" />
-    <File name="Implementation/EngineAdapter.cs" subtype="Code" buildaction="Compile" />
-    <File name="Implementation/TorrentManagerAdapter.cs" subtype="Code" buildaction="Compile" />
-    <File name="Implementation/TrackerAdapter.cs" subtype="Code" buildaction="Compile" />
     <File name="Interfaces/IEngineSettings.cs" subtype="Code" buildaction="Compile" />
-    <File name="Implementation/EngineSettingsAdapter.cs" subtype="Code" buildaction="Compile" />
     <File name="Interfaces/ITorrentSettings.cs" subtype="Code" buildaction="Compile" />
-    <File name="Implementation/TorrentSettingsAdapter.cs" subtype="Code" buildaction="Compile" />
     <File name="Interfaces/ITorrentFile.cs" subtype="Code" buildaction="Compile" />
-    <File name="Implementation/TorrentFileAdapter.cs" subtype="Code" buildaction="Compile" />
     <File name="DBus-API-Layout.txt" subtype="Code" buildaction="Nothing" />
     <File name="Interfaces/ITorrent.cs" subtype="Code" buildaction="Compile" />
-    <File name="Implementation/TorrentAdapter.cs" subtype="Code" buildaction="Compile" />
     <File name="Interfaces/ITorrentService.cs" subtype="Code" buildaction="Compile" />
-    <File name="Implementation/TorrentService.cs" subtype="Code" buildaction="Compile" />
     <File name="Interfaces/IExportable.cs" subtype="Code" buildaction="Compile" />
     <File name="ObjectPathComparer.cs" subtype="Code" buildaction="Compile" />
-    <File name="TorrentData.cs" subtype="Code" buildaction="Compile" />
     <File name="Interfaces/IPeer.cs" subtype="Code" buildaction="Compile" />
-    <File name="Implementation/PeerAdapter.cs" subtype="Code" buildaction="Compile" />
     <File name="EnumAdapters/TorrentState.cs" subtype="Code" buildaction="Compile" />
     <File name="EnumAdapters/Priority.cs" subtype="Code" buildaction="Compile" />
     <File name="EnumAdapters/EncryptionTypes.cs" subtype="Code" buildaction="Compile" />
-    <File name="EnumAdapters/EnumAdapter.cs" subtype="Code" buildaction="Compile" />
-    <File name="MainClass.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="NDesk.DBus, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f6716e4f9b2ed099" />
-    <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-    <ProjectReference type="Assembly" localcopy="True" refto="../libs/MonoTorrent.dll" />
   </References>
   <GtkDesignInfo />
-  <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am" RelativeConfigureInPath="..">
+  <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" RelativeConfigureInPath="..">
     <BuildFilesVar Sync="True" Name="FILES" />
     <DeployFilesVar />
     <ResourcesVar Name="RESOURCES" />
