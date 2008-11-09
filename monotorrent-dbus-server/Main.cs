@@ -1,6 +1,6 @@
-// ServerMode.cs
+// Main.cs
 //
-// Copyright (c) 2008 Alan McGovern (alan.mcgovern@gmail.com)
+// Copyright (c) 2008 Alan McGovern
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,34 +21,36 @@
 // THE SOFTWARE.
 //
 //
-
 using System;
+using MonoTorrent.DBus;
 using NDesk.DBus;
 using org.freedesktop.DBus;
-using MonoTorrent.DBus;
 
-namespace Sample
+namespace monotorrentdbusserver
 {
-	
-	
-	public class ServerMode
+	class MainClass
 	{
-		Bus bus;
-		TorrentService service;
-		
-		public ServerMode()
-		{
-			bus = TorrentService.Bus;
+		static readonly Bus bus = NDesk.DBus.Bus.Session;
 
-			service = TorrentService.Instance;
-			bus.Register (MainClass.ServicePath, service);
+		static string BusName = "org.monotorrent.dbus";
+		static ObjectPath ServicePath = new ObjectPath ("/org/monotorrent/service");
+		
+		public static void Main(string[] args)
+		{
+			if (bus.RequestName (BusName) != RequestNameReply.PrimaryOwner)
+			{
+				Console.WriteLine ("The monotorrent-dbus daemon is already running");
+				return;
+			}
+
+			bus.Register (MainClass.ServicePath, TorrentService.Instance);
+			
 			Console.CancelKeyPress += delegate {
-				foreach (string name in service.AvailableEngines ())
+				foreach (string name in TorrentService.Instance.AvailableEngines ())
 				{
 					Console.Write ("Destroying: {0}", name);
-					service.DestroyEngine (name);
+					TorrentService.Instance.DestroyEngine (name);
 				}
-				System.Threading.Thread.Sleep (1000);
 			};
 
 			while (true)

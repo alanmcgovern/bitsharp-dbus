@@ -51,10 +51,13 @@ dnl package checks, per config
 
 
 AC_CONFIG_FILES([
+monotorrent-dbus/monotorrent-dbus.pc
 Makefile
-monotorrent-dbus/monotorrent-dbus
+monotorrent-dbus-server/monotorrent-dbus-server
+monotorrent-dbus-server/Makefile
 monotorrent-dbus/Makefile
 monotorrent-dbus/data/org.monotorrent.dbus.service
+
 ])
 
 AC_OUTPUT
