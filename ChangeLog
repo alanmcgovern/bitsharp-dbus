@@ -1,3 +1,58 @@
+2008-10-10  Alan McGovern  <amcgovern@novell.com>
+
+	* Interfaces/IPeer.cs:
+	* monotorrent-dbus.mdp:
+	* Interfaces/IEngine.cs:
+	* Interfaces/ITracker.cs:
+	* Interfaces/ITorrent.cs:
+	* Interfaces/IDownloader.cs:
+	* Interfaces/IExportable.cs:
+	* Interfaces/ITorrentFile.cs:
+	* Implementation/PeerAdapter.cs:
+	* Interfaces/ITorrentService.cs:
+	* Interfaces/IEngineSettings.cs:
+	* Interfaces/ITorrentSettings.cs:
+	* Implementation/EngineAdapter.cs:
+	* Implementation/TorrentService.cs:
+	* Implementation/TrackerAdapter.cs:
+	* Implementation/TorrentAdapter.cs:
+	* Implementation/TorrentFileAdapter.cs:
+	* Implementation/TorrentManagerAdapter.cs:
+	* Implementation/EngineSettingsAdapter.cs:
+	* Implementation/TorrentSettingsAdapter.cs: Don't export properties over
+	dbus, NDesk.DBus has issues with setters. Update the API to support
+	that.
+
+2008-06-11  Alan McGovern <alan.mcgovern@gmail.com> 
+
+	* Implementation/EngineAdapter.cs: Correctly check if a torrent is
+	  registered and correctly find the right downloader to return.
+
+2008-06-11  Alan McGovern <alan.mcgovern@gmail.com> 
+
+	* Interfaces/IEngine.cs, Implementation/EngineAdapter.cs: Split the
+	  loading of a torrent into two explicit steps. 1) load a .torrent
+	  file 2) register it to get a downloader. This allows for much
+	  easier detection of when a torrent is already loaded.
+	* Interfaces/IEngineSettings.cs,
+	  Implementation/EngineSettingsAdapter.cs: Updated EngineSettings to
+	  support the new Encryption API in MonoTorrent
+	* Interfaces/IPeer.cs, Interfaces/ITracker.cs, Interfaces/ITorrent.cs,
+	  Interfaces/ITorrentFile.cs, Interfaces/ITorrentService.cs,
+	  Interfaces/ITorrentSettings.cs: Added comments to the interface
+	  declarations
+	* EnumAdapters/EncryptionTypes.cs: Added a 'None' option in
+	  EncryptionTypes
+	* EnumAdapters/EnumAdapter.cs: Added an adapter for the EncryptionTypes
+	  enum
+
+2008-06-11  Alan McGovern <alan.mcgovern@gmail.com> 
+
+	* Implementation/TrackerAdapter.cs: Store the path to the object
+	* Implementation/TorrentSettingsAdapter.cs,
+	  Interfaces/ITorrentSettings.cs: Remove properties which make no
+	  sense in the public API
+
 2008-06-11  Alan McGovern <alan.mcgovern@gmail.com> 
 
 	* monotorrent-dbus.mds: Enable changelog integration
