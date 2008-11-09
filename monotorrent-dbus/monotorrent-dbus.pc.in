@@ -4,3 +4,4 @@ Version: 0.2
 
 Requires: 
 Libs: -r:@expanded_libdir@/@PACKAGE@/monotorrent-dbus.dll
+Libraries=@expanded_libdir@/@PACKAGE@/monotorrent-dbus.dll
