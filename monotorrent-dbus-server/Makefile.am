@@ -1,26 +1,6 @@
 
 EXTRA_DIST =  
 
-# Warning: This is an automatically generated file, do not edit!
-
-if ENABLE_DEBUG
-ASSEMBLY_COMPILER_COMMAND = gmcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
-ASSEMBLY = bin/Debug/monotorrent-dbus-server.exe
-ASSEMBLY_MDB = $(ASSEMBLY).mdb
-COMPILE_TARGET = exe
-PROJECT_REFERENCES =  \
-	../monotorrent-dbus/bin/Debug/monotorrent-dbus.dll
-BUILD_DIR = bin/Debug
-
-MONOTORRENT_DLL_SOURCE=./libs/MonoTorrent.dll
-MONOTORRENT_DBUS_DLL_SOURCE=../monotorrent-dbus/bin/Debug/monotorrent-dbus.dll
-MONOTORRENT_DBUS_SERVER_EXE_MDB_SOURCE=bin/Debug/monotorrent-dbus-server.exe.mdb
-MONOTORRENT_DBUS_SERVER_EXE_MDB=$(BUILD_DIR)/monotorrent-dbus-server.exe.mdb
-
-endif
-
-if ENABLE_RELEASE
 ASSEMBLY_COMPILER_COMMAND = gmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize-
 ASSEMBLY = bin/Release/monotorrent-dbus-server.exe
@@ -33,8 +13,6 @@ BUILD_DIR = bin/Release
 MONOTORRENT_DLL_SOURCE=./libs/MonoTorrent.dll
 MONOTORRENT_DBUS_DLL_SOURCE=../monotorrent-dbus/bin/Release/monotorrent-dbus.dll
 MONOTORRENT_DBUS_SERVER_EXE_MDB=
-
-endif
 
 AL=al2
 SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
@@ -84,9 +62,9 @@ REFERENCES =  \
 	System.Xml
 
 DLL_REFERENCES =  \
-	./libs/MonoTorrent.dll
+	$(MONOTORRENT_DLL)
 
-CLEANFILES = $(PROGRAMFILES) $(BINARIES) ./libs/MonoTorrent.dll
+CLEANFILES = $(PROGRAMFILES) $(BINARIES) $(DLL_REFERENCES)
 
 include $(top_srcdir)/Makefile.include
 

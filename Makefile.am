@@ -1,5 +1,5 @@
 
-EXTRA_DIST =  expansions.m4 monotorrent-dbus/libs/MonoTorrent.dll
+EXTRA_DIST =  expansions.m4 monotorrent-dbus-server/libs/MonoTorrent.dll
 SUBDIRS =  monotorrent-dbus monotorrent-dbus-server
 
 run:
