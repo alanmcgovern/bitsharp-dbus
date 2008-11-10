@@ -1,5 +1,5 @@
 
-EXTRA_DIST =  $(MONOTORRENT_DLL_SOURCE)
+EXTRA_DIST =  
 
 ASSEMBLY_COMPILER_COMMAND = gmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize-
