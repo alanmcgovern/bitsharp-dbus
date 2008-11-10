@@ -46,18 +46,18 @@ fi
 
 dnl package checks, common for all configs
 PKG_CHECK_MODULES([NDESK_DBUS_10], [ndesk-dbus-1.0])
+PKG_CHECK_MODULES([MONOTORRENT], [monotorrent])
 
 dnl package checks, per config
 
 
 AC_CONFIG_FILES([
-monotorrent-dbus/monotorrent-dbus.pc
-Makefile
-monotorrent-dbus-server/monotorrent-dbus-server
-monotorrent-dbus-server/Makefile
-monotorrent-dbus/Makefile
-monotorrent-dbus-server/data/org.monotorrent.dbus.service
-
+	Makefile
+	monotorrent-dbus/Makefile
+	monotorrent-dbus/monotorrent-dbus.pc
+	monotorrent-dbus-server/Makefile
+	monotorrent-dbus-server/monotorrent-dbus-server
+	monotorrent-dbus-server/data/org.monotorrent.dbus.service
 ])
 
 AC_OUTPUT
