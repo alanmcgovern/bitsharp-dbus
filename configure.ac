@@ -3,6 +3,7 @@ dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.54])
 AC_INIT([monotorrent-dbus], [0.2])
 AM_INIT_AUTOMAKE([foreign])
+AM_MAINTAINER_MODE
 
 dnl pkg-config
 AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
@@ -46,7 +47,7 @@ fi
 
 dnl package checks, common for all configs
 PKG_CHECK_MODULES([NDESK_DBUS_10], [ndesk-dbus-1.0])
-PKG_CHECK_MODULES([MONOTORRENT], [monotorrent])
+PKG_CHECK_MODULES([MONOTORRENT], [monotorrent = 0.7.0])
 
 dnl package checks, per config
 

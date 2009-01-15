@@ -1,3 +1,7 @@
+2009-01-15  Alan McGovern  <amcgovern@novell.com>
+
+	* configure.ac: Require monotorrent 0.7.0
+
 2008-10-10  Alan McGovern  <amcgovern@novell.com>
 
 	* Interfaces/IPeer.cs:

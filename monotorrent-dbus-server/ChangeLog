@@ -1,0 +1,6 @@
+2009-01-15  Alan McGovern  <amcgovern@novell.com>
+
+	* monotorrent-dbus-server.mdp:
+	* Implementation/TorrentManagerAdapter.cs: Update for compatibility with
+	monotorrent 0.7.0
+

@@ -151,17 +151,18 @@ namespace MonoTorrent.DBus
 			manager.Pause ();
 		}
 		
-		private void LoadTrackers (MonoTorrent.Client.Tracker.TrackerTier[] tiers)
+		private void LoadTrackers (IList<MonoTorrent.Client.Tracker.TrackerTier> tiers)
 		{
-			trackers = new ObjectPath[tiers.Length] [];
+			trackers = new ObjectPath[tiers.Count] [];
 			
 			for (int i = 0; i < trackers.Length; i++)
 			{
-				trackers[i] = new ObjectPath[tiers[i].Trackers.Count];
+				IList<MonoTorrent.Client.Tracker.Tracker> t = tiers[i].GetTrackers();
+				trackers[i] = new ObjectPath[t.Count];
 				for (int j = 0; j < trackers[i].Length; j++)
 				{
 					ObjectPath path = new ObjectPath(string.Format("{0}/{1}", Path, trackerNumber++));
-					TorrentService.Bus.Register(path, tiers[i].Trackers[j]);
+					TorrentService.Bus.Register(path, t[j]);
 					trackers[i][j] = path;
 				}
 			}
